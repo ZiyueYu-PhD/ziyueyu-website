@@ -1,0 +1,173 @@
+[
+  {
+    "id": 11,
+    "src": "/photos/photo-11.jpg",
+    "width": 1600,
+    "height": 900,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Academic & Research",
+    "caption": "2025 — APS DFD meeting, with a labmate"
+  },
+  {
+    "id": 16,
+    "src": "/photos/photo-16.jpg",
+    "width": 1600,
+    "height": 900,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Academic & Research",
+    "caption": "Early PhD — Intro to Finite Elements course project group"
+  },
+  {
+    "id": 23,
+    "src": "/photos/photo-23.jpg",
+    "width": 1600,
+    "height": 900,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Life & Friends",
+    "caption": "2025 — skiing with friends"
+  },
+  {
+    "id": 28,
+    "src": "/photos/photo-28.jpg",
+    "width": 1600,
+    "height": 900,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Academic & Research",
+    "caption": "PhD years — teaching as a TA"
+  },
+  {
+    "id": 29,
+    "src": "/photos/photo-29.jpg",
+    "width": 1600,
+    "height": 900,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Life & Friends",
+    "caption": "2025 winter — a kind neighbor shoveling the snow"
+  },
+  {
+    "id": 35,
+    "src": "/photos/photo-35.jpg",
+    "width": 900,
+    "height": 1600,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Photography & Travel",
+    "caption": "PhD years — a beautiful sunset"
+  },
+  {
+    "id": 38,
+    "src": "/photos/photo-38.jpg",
+    "width": 1600,
+    "height": 780,
+    "period": "2024 · Graduation",
+    "category": "Graduation",
+    "caption": "Graduation season — the whole cohort"
+  },
+  {
+    "id": 39,
+    "src": "/photos/photo-39.jpg",
+    "width": 1600,
+    "height": 900,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Photography & Travel",
+    "caption": "Star trails, shot on a night out"
+  },
+  {
+    "id": 42,
+    "src": "/photos/photo-42.jpg",
+    "width": 1600,
+    "height": 1600,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Photography & Travel",
+    "caption": "PhD years — a fireworks festival"
+  },
+  {
+    "id": 43,
+    "src": "/photos/photo-43.jpg",
+    "width": 1600,
+    "height": 931,
+    "period": "2020 – 2024 · Undergrad at SUSTech",
+    "category": "Photography & Travel",
+    "caption": "Undergrad years — at the Louvre"
+  },
+  {
+    "id": 44,
+    "src": "/photos/photo-44.jpg",
+    "width": 1600,
+    "height": 899,
+    "period": "2020 – 2024 · Undergrad at SUSTech",
+    "category": "Life & Friends",
+    "caption": "Undergrad years — a charity performance at a hospital"
+  },
+  {
+    "id": 45,
+    "src": "/photos/photo-45.jpg",
+    "width": 1600,
+    "height": 898,
+    "period": "2024 · Graduation",
+    "category": "Graduation",
+    "caption": "Graduation season — portrait by a photographer"
+  },
+  {
+    "id": 47,
+    "src": "/photos/photo-47.jpg",
+    "width": 1600,
+    "height": 1536,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Photography & Travel",
+    "caption": "2026 — Yellowstone trip"
+  },
+  {
+    "id": 49,
+    "src": "/photos/photo-49.jpg",
+    "width": 1600,
+    "height": 1200,
+    "period": "2020 – 2024 · Undergrad at SUSTech",
+    "category": "Academic & Research",
+    "caption": "Undergrad years — beside Einstein's cabin in Zurich"
+  },
+  {
+    "id": 50,
+    "src": "/photos/photo-50.jpg",
+    "width": 1280,
+    "height": 853,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Academic & Research",
+    "caption": "PhD years — receiving an award with my advisor"
+  },
+  {
+    "id": 53,
+    "src": "/photos/photo-53.jpg",
+    "width": 900,
+    "height": 1600,
+    "period": "2024 · Graduation",
+    "category": "Photography & Travel",
+    "caption": "Graduation day — a beautiful sky"
+  },
+  {
+    "id": 55,
+    "src": "/photos/photo-55.jpg",
+    "width": 895,
+    "height": 1080,
+    "period": "2024 · Graduation",
+    "category": "Graduation",
+    "caption": "Graduation season — with my favorite professor"
+  },
+  {
+    "id": 57,
+    "src": "/photos/photo-57.jpg",
+    "width": 1600,
+    "height": 1067,
+    "period": "2024 · Graduation",
+    "category": "Graduation",
+    "caption": "Graduation season — giving a speech on stage"
+  },
+  {
+    "id": 68,
+    "src": "/photos/photo-68.jpg",
+    "width": 1600,
+    "height": 900,
+    "period": "2024 – Now · Ph.D. at Pittsburgh",
+    "category": "Academic & Research",
+    "caption": "PhD years — working at school until 3 a.m."
+  }
+]

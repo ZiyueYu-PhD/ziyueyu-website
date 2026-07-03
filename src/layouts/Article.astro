@@ -1,0 +1,17 @@
+---
+// 文章/详情页版式：套用全站骨架 + 一个窄一些的阅读栏 (.prose)。
+// 供 src/pages/work/*.md 用（在 md 顶部 frontmatter 写 layout: ../../layouts/Article.astro）。
+import Layout from "./Layout.astro";
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title} description={frontmatter.description}>
+  <article class="section">
+    <div class="wrap prose">
+      <a class="back-link" href="/#programs">← Back to Programs &amp; Publications</a>
+      {frontmatter.eyebrow && <p class="eyebrow">{frontmatter.eyebrow}</p>}
+      <slot />
+    </div>
+  </article>
+</Layout>

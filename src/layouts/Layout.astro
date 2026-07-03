@@ -1,0 +1,60 @@
+---
+// 所有页面共用的骨架：<head> 里的 SEO 信息 + 顶部导航 + 页脚。
+// 每个页面通过 title/description 传入自己的标题和描述，对 SEO 很重要。
+import Nav from "../components/Nav.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Ziyue Yu — Ph.D. candidate in Civil and Environmental Engineering at the University of Pittsburgh, fluid mechanics researcher, photographer.",
+} = Astro.props;
+
+const pageTitle = `${title} · Ziyue Yu`;
+
+const socials = [
+  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=C4-4wAQAAAAJ&hl=en" },
+  { label: "GitHub", href: "https://github.com/ZiyueYu-PhD" },
+  { label: "Email", href: "mailto:yuziyue20020619@outlook.com" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+
+    <!-- 社交媒体分享预览用的标签 -->
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL("/images/avatar.jpg", Astro.site)} />
+
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body>
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <span>© {new Date().getFullYear()} <strong>Ziyue Yu</strong></span>
+        <nav class="footer-links">
+          {socials.map((s) => (
+            <a href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
+              {s.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

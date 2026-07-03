@@ -1,0 +1,31 @@
+---
+// 顶部导航条：左侧姓名字标，右侧导航 + CV 按钮。
+// 改导航项 → 改 links 数组。href 以 "/#" 开头 = 首页锚点；其他 = 独立页面。
+const links = [
+  { label: "About", href: "/#about" },
+  { label: "Programs", href: "/#programs" },
+  { label: "Resume", href: "/#resume" },
+  { label: "Photos", href: "/photos" },
+  { label: "Contact", href: "/#contact" },
+];
+---
+
+<header class="nav-top">
+  <div class="nav-inner">
+    <a class="brand" href="/">Ziyue&nbsp;Yu</a>
+    <button class="nav-burger" aria-label="Toggle menu">☰</button>
+    <nav class="nav-links">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+      <a class="btn-cv" href="/files/Ziyue_Yu_CV.pdf" download>CV ↓</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // 移动端菜单开合；点链接后自动收起
+  const burger = document.querySelector(".nav-burger");
+  burger?.addEventListener("click", () => document.body.classList.toggle("nav-open"));
+  document.querySelectorAll(".nav-links a").forEach((a) =>
+    a.addEventListener("click", () => document.body.classList.remove("nav-open"))
+  );
+</script>

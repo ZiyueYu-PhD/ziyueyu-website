@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+
+# 个人素材原图 / CV 原件（体积大且含未公开的照片），不上传 GitHub。
+# 网站发布用的是 public/ 里已压缩挑选过的版本。
+.myself/
+
+# 参考素材（学长网站截图等），非本站内容，不发布。
+z_example/

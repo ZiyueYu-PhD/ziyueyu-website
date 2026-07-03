@@ -1,0 +1,293 @@
+---
+// 首页：分栏首屏 + 编号式章节（About / Programs / Resume / Photos 预览 / Contact）。
+// 顶部导航的 /#about 等锚点都指向本页对应 section。
+import Layout from "../layouts/Layout.astro";
+import photos from "../data/photos.json";
+import programs from "../data/programs.json";
+
+const previewPhotos = photos.slice(0, 6);
+---
+
+<Layout
+  title="Home"
+  description="Ziyue Yu — Ph.D. candidate in Civil and Environmental Engineering at the University of Pittsburgh. Research on low-Reynolds-number turbulence, Lagrangian coherent structures, and active matter. Photographer."
+>
+  <!-- ============ 首屏：满屏大背景照 + 叠加文字 ============ -->
+  <section id="home" class="hero-bg">
+    <div class="hero-bg-inner">
+      <p class="eyebrow light">Pittsburgh, PA · University of Pittsburgh</p>
+      <h1>Ziyue Yu</h1>
+      <p class="typed-line">
+        <span id="typed"></span><span class="typed-cursor">|</span>
+      </p>
+      <p class="hero-advisor">
+        Advised by
+        <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">Prof. Lei Fang</a>,
+        studying turbulence where inertia almost vanishes.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="/files/Ziyue_Yu_CV.pdf" download>Download CV</a>
+        <a class="btn btn-ghost-light" href="/#programs">View Programs</a>
+        <a class="btn btn-ghost-light" href="/photos">View Photos</a>
+      </div>
+      <div class="social-row light">
+        <a href="https://scholar.google.com/citations?user=C4-4wAQAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+        <a href="https://github.com/ZiyueYu-PhD" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="mailto:yuziyue20020619@outlook.com">Email</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ About ============ -->
+  <section id="about" class="section section-alt">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">01</span><h2>About</h2></div>
+      <div class="about-grid">
+        <div>
+          <p>
+            I am a Ph.D. candidate in Civil and Environmental Engineering at the
+            University of Pittsburgh, working with
+            <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">Prof. Lei Fang</a>.
+            My research focuses on turbulence in the weak-inertia regime — flows where
+            inertia is nearly gone, yet multiscale transport stubbornly persists.
+          </p>
+          <p>
+            I study low-Reynolds-number turbulence, Lagrangian coherent structures
+            (LCS), active-matter–flow interactions, and scale-to-scale energy transfer
+            in quasi-two-dimensional flows, combining laboratory experiments
+            (3D particle tracking velocimetry, electromagnetically forced flows) with
+            custom spectral and Lagrangian diagnostics. A recurring theme in my work is
+            that the <em>geometry</em> of a flow — how its stress and strain-rate
+            tensors align — can carry as much physics as its energy, and that carefully
+            controlling that geometry lets turbulence-like transport emerge in places it
+            was never expected.
+          </p>
+          <p>
+            I came to fluid mechanics from a mechanical and aerospace engineering
+            background at the Southern University of Science and Technology, where I
+            worked with Prof. Hongyan Yuan. That path — from solids and computation
+            toward the physics of flows — shaped how I like to work: build the
+            experiment, measure it carefully, and let the structure in the data tell the
+            story rather than the other way around.
+          </p>
+          <p>
+            Alongside research, I have taught as a teaching assistant at Pitt for Fluid
+            Mechanics and for Engineering &amp; Sustainable Development, which earned me
+            the department's Teaching Assistant of the Year award. I find that explaining
+            an idea clearly is part of understanding it in the first place.
+          </p>
+          <p>
+            Outside the lab, I enjoy photography — you'll find some of my photos
+            around this site — and tinkering with hardware of all kinds.
+          </p>
+        </div>
+        <div class="about-side">
+          <figure class="about-photo">
+            <img src="/images/about-award.jpg" alt="Ziyue Yu with advisor Prof. Lei Fang, holding the 2025 Teaching Assistant of the Year award" loading="lazy" />
+            <figcaption>With my advisor, Prof. Lei Fang — 2025 CEE Teaching Assistant of the Year.</figcaption>
+          </figure>
+          <ul class="about-facts">
+            <li><strong>Position</strong><span>Ph.D. Candidate, Civil &amp; Environmental Engineering</span></li>
+            <li><strong>University</strong><span>University of Pittsburgh</span></li>
+            <li><strong>B.Eng.</strong><span>Mechanical &amp; Aerospace Engineering, SUSTech (2020–2024)</span></li>
+            <li><strong>Location</strong><span>Pittsburgh, PA, USA</span></li>
+            <li><strong>Email</strong><span><a href="mailto:yuziyue20020619@outlook.com">yuziyue20020619@outlook.com</a></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Programs & Publications ============ -->
+  <!-- 内容来自 src/data/programs.json：加新项目/论文就在那里加一条，
+       有 PDF 就把文件放进 public/files/ 并把 pdf 字段填成 "/files/xxx.pdf" -->
+  <section id="programs" class="section">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">02</span><h2>Programs &amp; Publications</h2></div>
+      <p class="section-lede">
+        Research programs, papers, and talks. Preprints and PDFs are linked where
+        available.
+      </p>
+      <div class="prog-list">
+        {programs.map((item) => {
+          const status = item.type.replace(/\s+/g, "-").toLowerCase();
+          return (
+          <article class={`prog-item status-${status}`}>
+            <span class={`prog-badge badge-${status}`}>{item.type}</span>
+            <div class="prog-body">
+              <h3>{item.title}</h3>
+              <p class="prog-meta">{item.authors} · {item.venue} ({item.year})</p>
+              {item.summary && <p class="prog-summary">{item.summary}</p>}
+              {(item.link || item.pdf || item.detail) && (
+                <div class="prog-links">
+                  {item.detail && <a href={item.detail}>Read summary →</a>}
+                  {item.link && <a href={item.link} target="_blank" rel="noopener noreferrer">arXiv ↗</a>}
+                  {item.pdf && <a href={item.pdf} target="_blank" rel="noopener noreferrer">PDF ↗</a>}
+                </div>
+              )}
+            </div>
+          </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Resume ============ -->
+  <section id="resume" class="section section-alt">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">03</span><h2>Resume</h2></div>
+      <p class="section-lede">
+        A condensed version — the full CV is available as a
+        <a href="/files/Ziyue_Yu_CV.pdf" download>PDF download</a>.
+      </p>
+
+      <div class="resume-grid">
+        <div>
+          <div class="resume-block block-education">
+            <h3>Education</h3>
+            <div class="resume-item">
+              <h4>Ph.D., Civil &amp; Environmental Engineering</h4>
+              <span class="when">Sep 2024 – Present</span>
+              <p>University of Pittsburgh, Pittsburgh, PA</p>
+              <p>Advisor: <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">Prof. Lei Fang</a></p>
+            </div>
+            <div class="resume-item">
+              <h4>B.Eng., Mechanical &amp; Aerospace Engineering</h4>
+              <span class="when">Sep 2020 – Jun 2024</span>
+              <p>Southern University of Science and Technology (SUSTech), Shenzhen</p>
+              <p>Advisor: <a href="https://yuan.mae.sustech.edu.cn/people/members" target="_blank" rel="noopener noreferrer">Prof. Hongyan Yuan</a></p>
+            </div>
+          </div>
+
+          <div class="resume-block block-presentations">
+            <h3>Presentations</h3>
+            <div class="resume-item">
+              <h4>78th Annual Meeting of the APS Division of Fluid Dynamics</h4>
+              <span class="when">Nov 2025</span>
+              <p>
+                “Low Reynolds Number Turbulence: Tensor Geometry Drives Turbulence in
+                the Diminishing of Inertia,” Houston, TX.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="resume-block block-teaching">
+            <h3>Teaching</h3>
+            <div class="resume-item">
+              <h4>Teaching Assistant, University of Pittsburgh</h4>
+              <span class="when">2024 – 2025</span>
+              <p>CEE 1402 Fluid Mechanics · CEE 1610 Engineering and Sustainable Development</p>
+            </div>
+          </div>
+
+          <div class="resume-block block-awards">
+            <h3>Selected Awards</h3>
+            <div class="resume-item">
+              <h4>Teaching Assistant of the Year</h4>
+              <span class="when">2025</span>
+              <p>Civil &amp; Environmental Engineering, University of Pittsburgh</p>
+            </div>
+            <div class="resume-item">
+              <h4>SUSTech Scholarships &amp; Honors</h4>
+              <span class="when">2020 – 2022</span>
+              <p>
+                Second-class Scholarship for Outstanding Students · Fastest Progress
+                Scholarship (MAE) · Star of Literature and Art · Outstanding Student
+                Advisor
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Photos 预览 ============ -->
+  <section id="photos" class="section">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">04</span><h2>Photos</h2></div>
+      <p class="section-lede">
+        A little gallery of my life from 2020 to now — college, graduation, and
+        everything after.
+      </p>
+      <div class="photo-grid">
+        {previewPhotos.map((photo) => (
+          <a href="/photos" class={photo.height > photo.width ? "tall" : ""}>
+            <img src={photo.src} alt="Photography by Ziyue Yu" loading="lazy" />
+          </a>
+        ))}
+      </div>
+      <div class="hero-actions" style="margin-top: 30px;">
+        <a class="btn" href="/photos">Browse the Timeline →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Contact ============ -->
+  <section id="contact" class="section section-alt">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">05</span><h2>Contact</h2></div>
+      <div class="contact-cols">
+        <div class="contact-intro">
+          <p>
+            Always glad to talk about fluid mechanics, active matter, or photography
+            — whether it's a potential collaboration, a question about my work, or
+            just to say hello. Email is the fastest way to reach me.
+          </p>
+          <a class="btn" href="mailto:yuziyue20020619@outlook.com">Say hello →</a>
+        </div>
+        <ul class="contact-list">
+          <li>
+            <span class="k">Email</span>
+            <span class="v"><a href="mailto:yuziyue20020619@outlook.com">yuziyue20020619@outlook.com</a></span>
+          </li>
+          <li>
+            <span class="k">Scholar</span>
+            <span class="v"><a href="https://scholar.google.com/citations?user=C4-4wAQAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar Profile</a></span>
+          </li>
+          <li>
+            <span class="k">GitHub</span>
+            <span class="v"><a href="https://github.com/ZiyueYu-PhD" target="_blank" rel="noopener noreferrer">github.com/ZiyueYu-PhD</a></span>
+          </li>
+          <li>
+            <span class="k">Office</span>
+            <span class="v">Dept. of Civil &amp; Environmental Engineering, University of Pittsburgh, Pittsburgh, PA</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // 首屏打字机效果：想改轮播词条，改这个数组即可
+  const words = ["Ph.D. Candidate", "Fluid Mechanics Researcher", "Photographer"];
+  const el = document.getElementById("typed");
+
+  let wordIdx = 0;
+  let charIdx = 0;
+  let deleting = false;
+
+  function tick() {
+    if (!el) return;
+    const word = words[wordIdx];
+    charIdx += deleting ? -1 : 1;
+    el.textContent = word.slice(0, charIdx);
+
+    let delay = deleting ? 45 : 95;
+    if (!deleting && charIdx === word.length) {
+      delay = 1800; // 打完停一会儿
+      deleting = true;
+    } else if (deleting && charIdx === 0) {
+      deleting = false;
+      wordIdx = (wordIdx + 1) % words.length;
+      delay = 350;
+    }
+    setTimeout(tick, delay);
+  }
+
+  tick();
+</script>

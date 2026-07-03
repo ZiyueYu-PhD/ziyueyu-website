@@ -1,0 +1,173 @@
+---
+// 照片页：支持两种分组维度切换 —— 「时间」(period) 与 「事件」(category)。
+// 每张照片在 src/data/photos.json 里有：
+//   period   = 时间标签（如 "2024 · Graduation"）
+//   category = 事件标签（如 "Life" / "Academic" / "Photography"）
+//   caption  = 放大看图时显示的说明（可选）
+// 归类方法：改 photos.json 里对应 id 的 period / category 字段即可，页面自动分组。
+import Layout from "../layouts/Layout.astro";
+import photos from "../data/photos.json";
+
+// 每个维度的显示顺序。不在列表里的标签自动排到最后；值为 null 的照片归入兜底组。
+const PERIOD_ORDER = [
+  "2024 – Now · Ph.D. at Pittsburgh",
+  "2024 · Graduation",
+  "2020 – 2024 · Undergrad at SUSTech",
+];
+const PERIOD_FALLBACK = "Unsorted";
+
+const CATEGORY_ORDER = [
+  "Academic & Research",
+  "Photography & Travel",
+  "Graduation",
+  "Life & Friends",
+];
+const CATEGORY_FALLBACK = "Unsorted";
+
+type Photo = (typeof photos)[number];
+
+function groupBy(field: "period" | "category", order: string[], fallback: string) {
+  const groups = new Map<string, Photo[]>();
+  for (const photo of photos) {
+    const key = (photo[field] as string | null) ?? fallback;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key)!.push(photo);
+  }
+  const rank = (k: string) => {
+    if (k === fallback) return order.length + 1;
+    const i = order.indexOf(k);
+    return i === -1 ? order.length : i;
+  };
+  const keys = [...groups.keys()].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
+  return keys.map((k) => ({ label: k, items: groups.get(k)! }));
+}
+
+const timeGroups = groupBy("period", PERIOD_ORDER, PERIOD_FALLBACK);
+const eventGroups = groupBy("category", CATEGORY_ORDER, CATEGORY_FALLBACK);
+
+const slug = (s: string) => s.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+
+// 帮手：渲染一组「分组区块」
+const views = [
+  { id: "time", label: "By Time", groups: timeGroups },
+  { id: "event", label: "By Theme", groups: eventGroups },
+];
+---
+
+<Layout
+  title="Photos"
+  description="A photo gallery from Ziyue Yu — browse by time or by theme."
+>
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">04</span><h2>Photos</h2></div>
+      <p class="section-lede">
+        A little gallery of my life. Browse it as a timeline — newest first, back to
+        2020 — or grouped by theme. Click any photo to view it full-size.
+      </p>
+
+      <div class="view-toggle" role="tablist">
+        {views.map((v, i) => (
+          <button class={`view-btn${i === 0 ? " active" : ""}`} data-view={v.id}>
+            {v.label}
+          </button>
+        ))}
+      </div>
+
+      {views.map((v, i) => (
+        <div class={`photo-view${i === 0 ? " active" : ""}`} data-view={v.id}>
+          {v.groups.map((group) => (
+            <div class="period-block" id={`${v.id}-${slug(group.label)}`}>
+              <div class="period-head">
+                <h3>{group.label}</h3>
+                <span class="count">{group.items.length} photos</span>
+              </div>
+              <div class="photo-grid">
+                {group.items.map((photo) => (
+                  <a
+                    href={photo.src}
+                    data-id={photo.id}
+                    data-caption={photo.caption ?? ""}
+                    class={photo.height > photo.width ? "tall" : ""}
+                  >
+                    <img src={photo.src} alt={photo.caption ?? "Photo by Ziyue Yu"} loading="lazy" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-close" aria-label="Close">×</button>
+    <button class="lb-prev" aria-label="Previous">‹</button>
+    <figure>
+      <img src="" alt="Enlarged photo" />
+      <figcaption class="lb-caption"></figcaption>
+    </figure>
+    <button class="lb-next" aria-label="Next">›</button>
+  </div>
+</Layout>
+
+<script>
+  // 维度切换：显示/隐藏对应视图
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".view-btn");
+  const viewEls = document.querySelectorAll<HTMLElement>(".photo-view");
+  buttons.forEach((btn) =>
+    btn.addEventListener("click", () => {
+      const target = btn.dataset.view;
+      buttons.forEach((b) => b.classList.toggle("active", b.dataset.view === target));
+      viewEls.forEach((v) => v.classList.toggle("active", v.dataset.view === target));
+    })
+  );
+
+  // Lightbox：在「当前可见的视图」内翻页
+  const lightbox = document.getElementById("lightbox");
+  const lbImg = lightbox?.querySelector("img");
+  const lbCaption = lightbox?.querySelector(".lb-caption");
+  let links: HTMLAnchorElement[] = [];
+  let current = 0;
+
+  function activeLinks(): HTMLAnchorElement[] {
+    const view = document.querySelector(".photo-view.active");
+    return Array.from(view?.querySelectorAll("a[data-id]") ?? []) as HTMLAnchorElement[];
+  }
+
+  function show(i: number) {
+    if (!lightbox || !lbImg) return;
+    current = (i + links.length) % links.length;
+    lbImg.src = links[current].href;
+    if (lbCaption) lbCaption.textContent = links[current].dataset.caption ?? "";
+    lightbox.classList.add("open");
+    lightbox.setAttribute("aria-hidden", "false");
+  }
+
+  function close() {
+    lightbox?.classList.remove("open");
+    lightbox?.setAttribute("aria-hidden", "true");
+  }
+
+  document.querySelectorAll<HTMLAnchorElement>(".photo-view a[data-id]").forEach((a) =>
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      links = activeLinks();
+      show(links.indexOf(a));
+    })
+  );
+
+  lightbox?.querySelector(".lb-close")?.addEventListener("click", close);
+  lightbox?.querySelector(".lb-prev")?.addEventListener("click", () => show(current - 1));
+  lightbox?.querySelector(".lb-next")?.addEventListener("click", () => show(current + 1));
+  lightbox?.addEventListener("click", (e) => {
+    if (e.target === lightbox) close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox?.classList.contains("open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") show(current - 1);
+    if (e.key === "ArrowRight") show(current + 1);
+  });
+</script>
