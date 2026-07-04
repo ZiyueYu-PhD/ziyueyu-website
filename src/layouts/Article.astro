@@ -10,7 +10,11 @@ const { frontmatter } = Astro.props;
   <article class="section">
     <div class="wrap prose">
       <a class="back-link" href="/#programs"><span data-lang="en">← Back to Programs &amp; Publications</span><span data-lang="zh">← 返回研究与论文</span></a>
-      {frontmatter.eyebrow && <p class="eyebrow">{frontmatter.eyebrow}</p>}
+      {frontmatter.eyebrow && (
+        <p class="eyebrow">
+          <span data-lang="en">{frontmatter.eyebrow}</span><span data-lang="zh">{frontmatter.eyebrow_zh ?? frontmatter.eyebrow}</span>
+        </p>
+      )}
       <slot />
     </div>
   </article>
