@@ -9,7 +9,7 @@ const { frontmatter } = Astro.props;
 <Layout title={frontmatter.title} description={frontmatter.description}>
   <article class="section">
     <div class="wrap prose">
-      <a class="back-link" href="/#programs">← Back to Programs &amp; Publications</a>
+      <a class="back-link" href="/#programs"><span data-lang="en">← Back to Programs &amp; Publications</span><span data-lang="zh">← 返回研究与论文</span></a>
       {frontmatter.eyebrow && <p class="eyebrow">{frontmatter.eyebrow}</p>}
       <slot />
     </div>

@@ -47,10 +47,22 @@ const eventGroups = groupBy("category", CATEGORY_ORDER, CATEGORY_FALLBACK);
 
 const slug = (s: string) => s.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
 
-// 帮手：渲染一组「分组区块」
+// 分组标题只用于「显示」的中文译名（不改分组用的英文 key，避免影响归类/锚点）。
+const LABEL_ZH: Record<string, string> = {
+  "2024 – Now · Ph.D. at Pittsburgh": "2024 至今 · 匹兹堡读博",
+  "2024 · Graduation": "2024 · 毕业",
+  "2020 – 2024 · Undergrad at SUSTech": "2020 – 2024 · 南科大本科",
+  "Academic & Research": "学术与科研",
+  "Photography & Travel": "摄影与旅行",
+  "Graduation": "毕业",
+  "Life & Friends": "生活与朋友",
+  "Unsorted": "未分类",
+};
+
+// 帮手：渲染一组「分组区块」。label_zh 用于中文视图下显示的标题。
 const views = [
-  { id: "time", label: "By Time", groups: timeGroups },
-  { id: "event", label: "By Theme", groups: eventGroups },
+  { id: "time", en: "By Time", zh: "按时间", groups: timeGroups },
+  { id: "event", en: "By Theme", zh: "按主题", groups: eventGroups },
 ];
 ---
 
@@ -60,16 +72,16 @@ const views = [
 >
   <section class="section">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">04</span><h2>Photos</h2></div>
+      <div class="sec-head"><span class="sec-num">04</span><h2><span data-lang="en">Photos</span><span data-lang="zh">相册</span></h2></div>
       <p class="section-lede">
-        A little gallery of my life. Browse it as a timeline — newest first, back to
-        2020 — or grouped by theme. Click any photo to view it full-size.
+        <span data-lang="en">A little gallery of my life. Browse it as a timeline — newest first, back to
+        2020 — or grouped by theme. Click any photo to view it full-size.</span><span data-lang="zh">记录我生活的小相册。可以按时间轴浏览——从最新一直回到 2020 年——也可以按主题分组。点击任意照片可查看大图。</span>
       </p>
 
       <div class="view-toggle" role="tablist">
         {views.map((v, i) => (
           <button class={`view-btn${i === 0 ? " active" : ""}`} data-view={v.id}>
-            {v.label}
+            <span data-lang="en">{v.en}</span><span data-lang="zh">{v.zh}</span>
           </button>
         ))}
       </div>
@@ -79,8 +91,8 @@ const views = [
           {v.groups.map((group) => (
             <div class="period-block" id={`${v.id}-${slug(group.label)}`}>
               <div class="period-head">
-                <h3>{group.label}</h3>
-                <span class="count">{group.items.length} photos</span>
+                <h3><span data-lang="en">{group.label}</span><span data-lang="zh">{LABEL_ZH[group.label] ?? group.label}</span></h3>
+                <span class="count">{group.items.length} <span data-lang="en">photos</span><span data-lang="zh">张</span></span>
               </div>
               <div class="photo-grid">
                 {group.items.map((photo) => (

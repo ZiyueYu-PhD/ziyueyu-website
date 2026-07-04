@@ -147,6 +147,42 @@ img {
   color: #fff !important;
 }
 
+/* 中英文切换按钮（导航栏里） */
+.lang-toggle {
+  padding: 6px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.lang-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ====================================================================
+   语言切换机制：页面里每段文字都写了英文 + 中文两份，
+   分别标记 data-lang="en" / data-lang="zh"。
+   默认（<html> 无 .lang-zh 类）显示英文、隐藏中文；
+   点击切换按钮给 <html> 加上 .lang-zh 后反转。
+   只对被隐藏的一份设 display:none，显示的那份保持元素天然排版，布局不会乱。
+   ==================================================================== */
+:root:not(.lang-zh) [data-lang="zh"] {
+  display: none;
+}
+
+:root.lang-zh [data-lang="en"] {
+  display: none;
+}
+
 .nav-burger {
   display: none;
   border: none;

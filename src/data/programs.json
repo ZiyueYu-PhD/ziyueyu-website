@@ -1,43 +1,55 @@
 [
   {
     "type": "Submitted",
+    "type_zh": "已投稿",
     "title": "Tensor-Geometry-Activated Spectral Energy Transfer at Reynolds Numbers of Order Unity in Two-Dimensional Flows",
+    "title_zh": "二维流动中由张量几何激活的、雷诺数为 O(1) 量级的谱能量传递",
     "authors": "Z. Yu, X. Si, and L. Fang",
     "venue": "Submitted to Journal of Fluid Mechanics · arXiv:2511.05800 [physics.flu-dyn]",
     "year": "2025",
     "summary": "Turbulence-grade spectral energy transfer does not require inertia. By aligning the stress and strain-rate tensors with small directional perturbations in an electromagnetically driven thin-layer flow, the scale-to-scale energy flux is amplified up to ~300× at Re ~ O(1), crossing the weak-turbulence threshold in a nominally laminar flow.",
+    "summary_zh": "达到湍流量级的谱能量传递并不需要惯性。在电磁驱动的薄层流动中，用微小的方向扰动使应力张量与应变率张量对齐，跨尺度的能量通量在 Re~O(1) 时被放大最多约 300 倍，使一个名义上层流的流动越过了弱湍流的门槛。",
     "link": "https://arxiv.org/abs/2511.05800",
     "detail": "/work/tensor-geometry",
     "pdf": null
   },
   {
     "type": "Finalizing",
+    "type_zh": "定稿中",
     "title": "Two-Way Coupling in Active Suspensions Suppresses Particle Accumulation and Induces Non-Monotonic Flow Stabilization",
+    "title_zh": "活性悬浮液中的双向耦合抑制颗粒聚集并诱导非单调的流动稳定化",
     "authors": "M. Wu, Z. Yu, and L. Fang",
     "venue": "Manuscript being finalized · Physical Review Fluids",
     "year": "2026",
     "summary": "Across 85 experiments with live Artemia salina swimmers in an electromagnetically driven cellular flow, finite swimmer loading suppresses the LCS accumulation predicted by one-way coupling, and the swimmers' back-reaction can either disrupt or — a previously unreported effect — reinforce the flow's transport skeleton, yielding a non-monotonic stability phase diagram in swimmer number × forcing strength.",
+    "summary_zh": "在 85 组以活体丰年虾（Artemia salina）为游动者、电磁驱动的胞状流动实验中，有限的游动者负载抑制了单向耦合所预测的 LCS 聚集；游动者的反作用既可能破坏、也可能——一种此前未见报道的效应——强化流动的输运骨架，从而在“游动者数量 × 驱动强度”平面上给出一个非单调的稳定性相图。",
     "link": null,
     "detail": "/work/active-suspensions",
     "pdf": null
   },
   {
     "type": "In Progress",
+    "type_zh": "进行中",
     "title": "How Many Steps Does It Take to Kill the Tornado",
+    "title_zh": "需要多少步才能“杀死”龙卷",
     "authors": "Z. Yu and L. Fang",
     "venue": "Research in progress",
     "year": "2025",
     "summary": "An energy-efficient strategy for destabilizing tornado-like vortices with small directional perturbations that trigger forward spectral energy flux and progressively collapse the vortex core.",
+    "summary_zh": "一种高能效的策略：用微小的方向扰动触发正向的谱能量通量，逐步瓦解类龙卷涡的涡核，从而使其失稳。",
     "link": null,
     "pdf": null
   },
   {
     "type": "Talk",
+    "type_zh": "会议报告",
     "title": "Low Reynolds Number Turbulence: Tensor Geometry Drives Turbulence in the Diminishing of Inertia",
+    "title_zh": "低雷诺数湍流：张量几何在惯性消退中驱动湍流",
     "authors": "Z. Yu and L. Fang",
     "venue": "78th Annual Meeting of the APS Division of Fluid Dynamics, Houston, TX",
     "year": "2025",
     "summary": null,
+    "summary_zh": null,
     "link": null,
     "pdf": null
   }

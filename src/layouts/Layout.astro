@@ -28,6 +28,18 @@ const socials = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 语言初始化：在页面绘制前就读取上次选择的语言，避免中文用户看到英文闪一下。 -->
+    <script is:inline>
+      (function () {
+        try {
+          if (localStorage.getItem("lang") === "zh") {
+            document.documentElement.classList.add("lang-zh");
+            document.documentElement.lang = "zh";
+          }
+        } catch (e) {}
+      })();
+    </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
 

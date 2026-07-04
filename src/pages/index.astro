@@ -15,20 +15,27 @@ const previewPhotos = photos.slice(0, 6);
   <!-- ============ 首屏：满屏大背景照 + 叠加文字 ============ -->
   <section id="home" class="hero-bg">
     <div class="hero-bg-inner">
-      <p class="eyebrow light">Pittsburgh, PA · University of Pittsburgh</p>
+      <p class="eyebrow light">
+        <span data-lang="en">Pittsburgh, PA · University of Pittsburgh</span><span data-lang="zh">美国匹兹堡 · 匹兹堡大学</span>
+      </p>
       <h1>Ziyue Yu</h1>
       <p class="typed-line">
         <span id="typed"></span><span class="typed-cursor">|</span>
       </p>
-      <p class="hero-advisor">
+      <p class="hero-advisor" data-lang="en">
         Advised by
         <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">Prof. Lei Fang</a>,
         studying turbulence where inertia almost vanishes.
       </p>
+      <p class="hero-advisor" data-lang="zh">
+        师从
+        <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">方磊 教授</a>，
+        研究惯性趋近于零时的湍流。
+      </p>
       <div class="hero-actions">
-        <a class="btn" href="/files/Ziyue_Yu_CV.pdf" download>Download CV</a>
-        <a class="btn btn-ghost-light" href="/#programs">View Programs</a>
-        <a class="btn btn-ghost-light" href="/photos">View Photos</a>
+        <a class="btn" href="/files/Ziyue_Yu_CV.pdf" download><span data-lang="en">Download CV</span><span data-lang="zh">下载简历</span></a>
+        <a class="btn btn-ghost-light" href="/#programs"><span data-lang="en">View Programs</span><span data-lang="zh">查看研究</span></a>
+        <a class="btn btn-ghost-light" href="/photos"><span data-lang="en">View Photos</span><span data-lang="zh">查看相册</span></a>
       </div>
       <div class="social-row light">
         <a href="https://scholar.google.com/citations?user=C4-4wAQAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
@@ -41,17 +48,22 @@ const previewPhotos = photos.slice(0, 6);
   <!-- ============ About ============ -->
   <section id="about" class="section section-alt">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">01</span><h2>About</h2></div>
+      <div class="sec-head"><span class="sec-num">01</span><h2><span data-lang="en">About</span><span data-lang="zh">关于我</span></h2></div>
       <div class="about-grid">
         <div>
-          <p>
+          <p data-lang="en">
             I am a Ph.D. candidate in Civil and Environmental Engineering at the
             University of Pittsburgh, working with
             <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">Prof. Lei Fang</a>.
             My research focuses on turbulence in the weak-inertia regime — flows where
             inertia is nearly gone, yet multiscale transport stubbornly persists.
           </p>
-          <p>
+          <p data-lang="zh">
+            我是匹兹堡大学土木与环境工程系的博士研究生，导师是
+            <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">方磊 教授</a>。
+            我的研究聚焦于弱惯性区间的湍流——在这类流动中，惯性几乎消失，多尺度输运却依然顽固地存在。
+          </p>
+          <p data-lang="en">
             I study low-Reynolds-number turbulence, Lagrangian coherent structures
             (LCS), active-matter–flow interactions, and scale-to-scale energy transfer
             in quasi-two-dimensional flows, combining laboratory experiments
@@ -62,7 +74,13 @@ const previewPhotos = photos.slice(0, 6);
             controlling that geometry lets turbulence-like transport emerge in places it
             was never expected.
           </p>
-          <p>
+          <p data-lang="zh">
+            我研究低雷诺数湍流、拉格朗日拟序结构（LCS）、活性物质与流动的相互作用，以及准二维流动中尺度间的能量传递；
+            方法上把实验室实验（三维粒子追踪测速、电磁驱动流动）与自己开发的谱分析和拉格朗日诊断工具结合起来。
+            我工作中反复出现的一个主题是：流动的 <em>几何结构</em>——它的应力张量与应变率张量如何对齐——
+            所承载的物理不亚于它的能量；而精细地调控这种几何结构，能让类湍流的输运在人们从未预期的地方出现。
+          </p>
+          <p data-lang="en">
             I came to fluid mechanics from a mechanical and aerospace engineering
             background at the Southern University of Science and Technology, where I
             worked with Prof. Hongyan Yuan. That path — from solids and computation
@@ -70,28 +88,49 @@ const previewPhotos = photos.slice(0, 6);
             experiment, measure it carefully, and let the structure in the data tell the
             story rather than the other way around.
           </p>
-          <p>
+          <p data-lang="zh">
+            我从南方科技大学的机械与航空航天工程背景走进流体力学，本科期间跟随 袁鸿雁 教授做研究。
+            这条从固体力学与计算走向流动物理的路径，塑造了我喜欢的工作方式：亲手搭建实验、仔细测量，
+            让数据里的结构来讲述故事，而不是反过来。
+          </p>
+          <p data-lang="en">
             Alongside research, I have taught as a teaching assistant at Pitt for Fluid
             Mechanics and for Engineering &amp; Sustainable Development, which earned me
             the department's Teaching Assistant of the Year award. I find that explaining
             an idea clearly is part of understanding it in the first place.
           </p>
-          <p>
+          <p data-lang="zh">
+            在科研之外，我在匹兹堡大学担任过助教，教授流体力学以及工程与可持续发展课程，并因此获得了系里的
+            年度最佳助教 奖。我发现，把一个想法讲清楚，本身就是真正理解它的一部分。
+          </p>
+          <p data-lang="en">
             Outside the lab, I enjoy photography — you'll find some of my photos
             around this site — and tinkering with hardware of all kinds.
+          </p>
+          <p data-lang="zh">
+            实验室之外，我喜欢摄影——你会在这个网站的各处看到我拍的一些照片——也喜欢捣鼓各种硬件。
           </p>
         </div>
         <div class="about-side">
           <figure class="about-photo">
             <img src="/images/about-award.jpg" alt="Ziyue Yu with advisor Prof. Lei Fang, holding the 2025 Teaching Assistant of the Year award" loading="lazy" />
-            <figcaption>With my advisor, Prof. Lei Fang — 2025 CEE Teaching Assistant of the Year.</figcaption>
+            <figcaption>
+              <span data-lang="en">With my advisor, Prof. Lei Fang — 2025 CEE Teaching Assistant of the Year.</span><span data-lang="zh">与我的导师方磊教授合影——2025 年土木与环境工程系年度最佳助教。</span>
+            </figcaption>
           </figure>
-          <ul class="about-facts">
+          <ul class="about-facts" data-lang="en">
             <li><strong>Position</strong><span>Ph.D. Candidate, Civil &amp; Environmental Engineering</span></li>
             <li><strong>University</strong><span>University of Pittsburgh</span></li>
             <li><strong>B.Eng.</strong><span>Mechanical &amp; Aerospace Engineering, SUSTech (2020–2024)</span></li>
             <li><strong>Location</strong><span>Pittsburgh, PA, USA</span></li>
             <li><strong>Email</strong><span><a href="mailto:yuziyue20020619@outlook.com">yuziyue20020619@outlook.com</a></span></li>
+          </ul>
+          <ul class="about-facts" data-lang="zh">
+            <li><strong>职位</strong><span>土木与环境工程博士研究生</span></li>
+            <li><strong>学校</strong><span>匹兹堡大学</span></li>
+            <li><strong>本科</strong><span>机械与航空航天工程，南方科技大学（2020–2024）</span></li>
+            <li><strong>所在地</strong><span>美国宾夕法尼亚州匹兹堡</span></li>
+            <li><strong>邮箱</strong><span><a href="mailto:yuziyue20020619@outlook.com">yuziyue20020619@outlook.com</a></span></li>
           </ul>
         </div>
       </div>
@@ -103,24 +142,32 @@ const previewPhotos = photos.slice(0, 6);
        有 PDF 就把文件放进 public/files/ 并把 pdf 字段填成 "/files/xxx.pdf" -->
   <section id="programs" class="section">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">02</span><h2>Programs &amp; Publications</h2></div>
+      <div class="sec-head"><span class="sec-num">02</span><h2><span data-lang="en">Programs &amp; Publications</span><span data-lang="zh">研究与论文</span></h2></div>
       <p class="section-lede">
-        Research programs, papers, and talks. Preprints and PDFs are linked where
-        available.
+        <span data-lang="en">Research programs, papers, and talks. Preprints and PDFs are linked where
+        available.</span><span data-lang="zh">研究项目、论文与学术报告。有预印本或 PDF 的地方都附了链接。</span>
       </p>
       <div class="prog-list">
         {programs.map((item) => {
           const status = item.type.replace(/\s+/g, "-").toLowerCase();
           return (
           <article class={`prog-item status-${status}`}>
-            <span class={`prog-badge badge-${status}`}>{item.type}</span>
+            <span class={`prog-badge badge-${status}`}>
+              <span data-lang="en">{item.type}</span><span data-lang="zh">{item.type_zh ?? item.type}</span>
+            </span>
             <div class="prog-body">
-              <h3>{item.title}</h3>
+              <h3>
+                <span data-lang="en">{item.title}</span><span data-lang="zh">{item.title_zh ?? item.title}</span>
+              </h3>
               <p class="prog-meta">{item.authors} · {item.venue} ({item.year})</p>
-              {item.summary && <p class="prog-summary">{item.summary}</p>}
+              {item.summary && (
+                <p class="prog-summary">
+                  <span data-lang="en">{item.summary}</span><span data-lang="zh">{item.summary_zh ?? item.summary}</span>
+                </p>
+              )}
               {(item.link || item.pdf || item.detail) && (
                 <div class="prog-links">
-                  {item.detail && <a href={item.detail}>Read summary →</a>}
+                  {item.detail && <a href={item.detail}><span data-lang="en">Read summary →</span><span data-lang="zh">阅读摘要 →</span></a>}
                   {item.link && <a href={item.link} target="_blank" rel="noopener noreferrer">arXiv ↗</a>}
                   {item.pdf && <a href={item.pdf} target="_blank" rel="noopener noreferrer">PDF ↗</a>}
                 </div>
@@ -136,38 +183,46 @@ const previewPhotos = photos.slice(0, 6);
   <!-- ============ Resume ============ -->
   <section id="resume" class="section section-alt">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">03</span><h2>Resume</h2></div>
+      <div class="sec-head"><span class="sec-num">03</span><h2><span data-lang="en">Resume</span><span data-lang="zh">履历</span></h2></div>
       <p class="section-lede">
-        A condensed version — the full CV is available as a
-        <a href="/files/Ziyue_Yu_CV.pdf" download>PDF download</a>.
+        <span data-lang="en">A condensed version — the full CV is available as a
+        <a href="/files/Ziyue_Yu_CV.pdf" download>PDF download</a>.</span><span data-lang="zh">精简版——完整简历可
+        <a href="/files/Ziyue_Yu_CV.pdf" download>下载 PDF</a>。</span>
       </p>
 
       <div class="resume-grid">
         <div>
           <div class="resume-block block-education">
-            <h3>Education</h3>
+            <h3><span data-lang="en">Education</span><span data-lang="zh">教育背景</span></h3>
             <div class="resume-item">
-              <h4>Ph.D., Civil &amp; Environmental Engineering</h4>
-              <span class="when">Sep 2024 – Present</span>
-              <p>University of Pittsburgh, Pittsburgh, PA</p>
-              <p>Advisor: <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">Prof. Lei Fang</a></p>
+              <h4><span data-lang="en">Ph.D., Civil &amp; Environmental Engineering</span><span data-lang="zh">博士，土木与环境工程</span></h4>
+              <span class="when" data-lang="en">Sep 2024 – Present</span><span class="when" data-lang="zh">2024 年 9 月 – 至今</span>
+              <p data-lang="en">University of Pittsburgh, Pittsburgh, PA</p>
+              <p data-lang="zh">匹兹堡大学，美国宾州匹兹堡</p>
+              <p data-lang="en">Advisor: <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">Prof. Lei Fang</a></p>
+              <p data-lang="zh">导师：<a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">方磊 教授</a></p>
             </div>
             <div class="resume-item">
-              <h4>B.Eng., Mechanical &amp; Aerospace Engineering</h4>
-              <span class="when">Sep 2020 – Jun 2024</span>
-              <p>Southern University of Science and Technology (SUSTech), Shenzhen</p>
-              <p>Advisor: <a href="https://yuan.mae.sustech.edu.cn/people/members" target="_blank" rel="noopener noreferrer">Prof. Hongyan Yuan</a></p>
+              <h4><span data-lang="en">B.Eng., Mechanical &amp; Aerospace Engineering</span><span data-lang="zh">工学学士，机械与航空航天工程</span></h4>
+              <span class="when" data-lang="en">Sep 2020 – Jun 2024</span><span class="when" data-lang="zh">2020 年 9 月 – 2024 年 6 月</span>
+              <p data-lang="en">Southern University of Science and Technology (SUSTech), Shenzhen</p>
+              <p data-lang="zh">南方科技大学，深圳</p>
+              <p data-lang="en">Advisor: <a href="https://yuan.mae.sustech.edu.cn/people/members" target="_blank" rel="noopener noreferrer">Prof. Hongyan Yuan</a></p>
+              <p data-lang="zh">导师：<a href="https://yuan.mae.sustech.edu.cn/people/members" target="_blank" rel="noopener noreferrer">袁鸿雁 教授</a></p>
             </div>
           </div>
 
           <div class="resume-block block-presentations">
-            <h3>Presentations</h3>
+            <h3><span data-lang="en">Presentations</span><span data-lang="zh">学术报告</span></h3>
             <div class="resume-item">
-              <h4>78th Annual Meeting of the APS Division of Fluid Dynamics</h4>
-              <span class="when">Nov 2025</span>
-              <p>
+              <h4><span data-lang="en">78th Annual Meeting of the APS Division of Fluid Dynamics</span><span data-lang="zh">美国物理学会流体力学分会第 78 届年会</span></h4>
+              <span class="when" data-lang="en">Nov 2025</span><span class="when" data-lang="zh">2025 年 11 月</span>
+              <p data-lang="en">
                 “Low Reynolds Number Turbulence: Tensor Geometry Drives Turbulence in
                 the Diminishing of Inertia,” Houston, TX.
+              </p>
+              <p data-lang="zh">
+                《低雷诺数湍流：张量几何在惯性消退中驱动湍流》，美国德州休斯敦。
               </p>
             </div>
           </div>
@@ -175,28 +230,33 @@ const previewPhotos = photos.slice(0, 6);
 
         <div>
           <div class="resume-block block-teaching">
-            <h3>Teaching</h3>
+            <h3><span data-lang="en">Teaching</span><span data-lang="zh">教学</span></h3>
             <div class="resume-item">
-              <h4>Teaching Assistant, University of Pittsburgh</h4>
+              <h4><span data-lang="en">Teaching Assistant, University of Pittsburgh</span><span data-lang="zh">助教，匹兹堡大学</span></h4>
               <span class="when">2024 – 2025</span>
-              <p>CEE 1402 Fluid Mechanics · CEE 1610 Engineering and Sustainable Development</p>
+              <p data-lang="en">CEE 1402 Fluid Mechanics · CEE 1610 Engineering and Sustainable Development</p>
+              <p data-lang="zh">CEE 1402 流体力学 · CEE 1610 工程与可持续发展</p>
             </div>
           </div>
 
           <div class="resume-block block-awards">
-            <h3>Selected Awards</h3>
+            <h3><span data-lang="en">Selected Awards</span><span data-lang="zh">主要荣誉</span></h3>
             <div class="resume-item">
-              <h4>Teaching Assistant of the Year</h4>
+              <h4><span data-lang="en">Teaching Assistant of the Year</span><span data-lang="zh">年度最佳助教</span></h4>
               <span class="when">2025</span>
-              <p>Civil &amp; Environmental Engineering, University of Pittsburgh</p>
+              <p data-lang="en">Civil &amp; Environmental Engineering, University of Pittsburgh</p>
+              <p data-lang="zh">匹兹堡大学土木与环境工程系</p>
             </div>
             <div class="resume-item">
-              <h4>SUSTech Scholarships &amp; Honors</h4>
+              <h4><span data-lang="en">SUSTech Scholarships &amp; Honors</span><span data-lang="zh">南方科技大学奖学金与荣誉</span></h4>
               <span class="when">2020 – 2022</span>
-              <p>
+              <p data-lang="en">
                 Second-class Scholarship for Outstanding Students · Fastest Progress
                 Scholarship (MAE) · Star of Literature and Art · Outstanding Student
                 Advisor
+              </p>
+              <p data-lang="zh">
+                优秀学生二等奖学金 · 最快进步奖学金（机械系） · 文艺之星 · 优秀学生助理班主任
               </p>
             </div>
           </div>
@@ -208,10 +268,10 @@ const previewPhotos = photos.slice(0, 6);
   <!-- ============ Photos 预览 ============ -->
   <section id="photos" class="section">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">04</span><h2>Photos</h2></div>
+      <div class="sec-head"><span class="sec-num">04</span><h2><span data-lang="en">Photos</span><span data-lang="zh">相册</span></h2></div>
       <p class="section-lede">
-        A little gallery of my life from 2020 to now — college, graduation, and
-        everything after.
+        <span data-lang="en">A little gallery of my life from 2020 to now — college, graduation, and
+        everything after.</span><span data-lang="zh">记录我从 2020 年至今生活的小相册——大学、毕业，以及之后的一切。</span>
       </p>
       <div class="photo-grid">
         {previewPhotos.map((photo) => (
@@ -221,7 +281,7 @@ const previewPhotos = photos.slice(0, 6);
         ))}
       </div>
       <div class="hero-actions" style="margin-top: 30px;">
-        <a class="btn" href="/photos">Browse the Timeline →</a>
+        <a class="btn" href="/photos"><span data-lang="en">Browse the Timeline →</span><span data-lang="zh">浏览时间轴 →</span></a>
       </div>
     </div>
   </section>
@@ -229,32 +289,36 @@ const previewPhotos = photos.slice(0, 6);
   <!-- ============ Contact ============ -->
   <section id="contact" class="section section-alt">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">05</span><h2>Contact</h2></div>
+      <div class="sec-head"><span class="sec-num">05</span><h2><span data-lang="en">Contact</span><span data-lang="zh">联系</span></h2></div>
       <div class="contact-cols">
         <div class="contact-intro">
-          <p>
+          <p data-lang="en">
             Always glad to talk about fluid mechanics, active matter, or photography
             — whether it's a potential collaboration, a question about my work, or
             just to say hello. Email is the fastest way to reach me.
           </p>
-          <a class="btn" href="mailto:yuziyue20020619@outlook.com">Say hello →</a>
+          <p data-lang="zh">
+            无论是潜在的合作、关于我研究的问题，还是只想打个招呼，我都很乐意聊聊流体力学、活性物质或摄影。
+            发邮件是找到我最快的方式。
+          </p>
+          <a class="btn" href="mailto:yuziyue20020619@outlook.com"><span data-lang="en">Say hello →</span><span data-lang="zh">打个招呼 →</span></a>
         </div>
         <ul class="contact-list">
           <li>
-            <span class="k">Email</span>
+            <span class="k"><span data-lang="en">Email</span><span data-lang="zh">邮箱</span></span>
             <span class="v"><a href="mailto:yuziyue20020619@outlook.com">yuziyue20020619@outlook.com</a></span>
           </li>
           <li>
-            <span class="k">Scholar</span>
-            <span class="v"><a href="https://scholar.google.com/citations?user=C4-4wAQAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar Profile</a></span>
+            <span class="k"><span data-lang="en">Scholar</span><span data-lang="zh">学术主页</span></span>
+            <span class="v"><a href="https://scholar.google.com/citations?user=C4-4wAQAAAAJ&hl=en" target="_blank" rel="noopener noreferrer"><span data-lang="en">Google Scholar Profile</span><span data-lang="zh">Google Scholar 主页</span></a></span>
           </li>
           <li>
             <span class="k">GitHub</span>
             <span class="v"><a href="https://github.com/ZiyueYu-PhD" target="_blank" rel="noopener noreferrer">github.com/ZiyueYu-PhD</a></span>
           </li>
           <li>
-            <span class="k">Office</span>
-            <span class="v">Dept. of Civil &amp; Environmental Engineering, University of Pittsburgh, Pittsburgh, PA</span>
+            <span class="k"><span data-lang="en">Office</span><span data-lang="zh">办公室</span></span>
+            <span class="v"><span data-lang="en">Dept. of Civil &amp; Environmental Engineering, University of Pittsburgh, Pittsburgh, PA</span><span data-lang="zh">匹兹堡大学土木与环境工程系，美国宾州匹兹堡</span></span>
           </li>
         </ul>
       </div>
@@ -263,17 +327,34 @@ const previewPhotos = photos.slice(0, 6);
 </Layout>
 
 <script>
-  // 首屏打字机效果：想改轮播词条，改这个数组即可
-  const words = ["Ph.D. Candidate", "Fluid Mechanics Researcher", "Photographer"];
+  // 首屏打字机效果：想改轮播词条，改这两个数组即可（分中英文）
+  const WORDS = {
+    en: ["Ph.D. Candidate", "Fluid Mechanics Researcher", "Photographer"],
+    zh: ["博士研究生", "流体力学研究者", "摄影爱好者"],
+  };
   const el = document.getElementById("typed");
 
+  function currentWords() {
+    return document.documentElement.classList.contains("lang-zh") ? WORDS.zh : WORDS.en;
+  }
+
+  let words = currentWords();
   let wordIdx = 0;
   let charIdx = 0;
   let deleting = false;
 
+  // 切换语言时：立即换成对应语言的词条，从头开始打字
+  document.addEventListener("langchange", () => {
+    words = currentWords();
+    wordIdx = 0;
+    charIdx = 0;
+    deleting = false;
+    if (el) el.textContent = "";
+  });
+
   function tick() {
     if (!el) return;
-    const word = words[wordIdx];
+    const word = words[wordIdx % words.length];
     charIdx += deleting ? -1 : 1;
     el.textContent = word.slice(0, charIdx);
 
