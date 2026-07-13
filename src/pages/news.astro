@@ -1,0 +1,92 @@
+---
+// News 页：按年份倒序分组的时间线。每条更新在 src/data/news.json 里：
+//   date  = "YYYY-MM"（决定排序与分组的年份）
+//   tag   = 类型标签，对应下面的 TAG 配色：award / talk / paper / milestone / news
+//   title_en / title_zh = 中英文标题
+//   body_en / body_zh   = 中英文正文（可选）
+//   link  = 相关链接（可选；站内如 "/videos"，站外用完整 http 链接）
+// 加一条新闻：在 news.json 顶部加一条即可，页面自动按年份分组、倒序排列。
+import Layout from "../layouts/Layout.astro";
+import news from "../data/news.json";
+
+// 标签的中英文名 + 配色（复用站内已有的状态色系）
+const TAG: Record<string, { en: string; zh: string; cls: string }> = {
+  award:     { en: "Award",     zh: "奖项", cls: "tag-award" },
+  talk:      { en: "Talk",      zh: "报告", cls: "tag-talk" },
+  paper:     { en: "Paper",     zh: "论文", cls: "tag-paper" },
+  milestone: { en: "Milestone", zh: "里程碑", cls: "tag-milestone" },
+  news:      { en: "News",      zh: "动态", cls: "tag-news" },
+};
+
+type News = (typeof news)[number];
+
+// 按日期倒序，再按年份分组（年份也倒序）。
+const sorted = [...news].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+const byYear = new Map<string, News[]>();
+for (const n of sorted) {
+  const year = n.date.slice(0, 4);
+  if (!byYear.has(year)) byYear.set(year, []);
+  byYear.get(year)!.push(n);
+}
+const years = [...byYear.keys()].sort((a, b) => (a < b ? 1 : -1));
+
+const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTHS_ZH = ["", "1 月", "2 月", "3 月", "4 月", "5 月", "6 月", "7 月", "8 月", "9 月", "10 月", "11 月", "12 月"];
+function monthIdx(date: string): number {
+  const m = parseInt(date.slice(5, 7), 10);
+  return Number.isFinite(m) ? m : 0;
+}
+---
+
+<Layout
+  title="News"
+  description="Recent news and updates from Ziyue Yu — talks, papers, awards, and milestones."
+>
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">06</span><h2><span data-lang="en">News</span><span data-lang="zh">动态</span></h2></div>
+      <p class="section-lede">
+        <span data-lang="en">Recent updates — talks, papers, awards, and milestones.</span><span data-lang="zh">最近的更新——报告、论文、奖项与里程碑。</span>
+      </p>
+
+      {years.map((year) => (
+        <div class="period-block news-year" id={`news-${year}`}>
+          <div class="period-head">
+            <h3>{year}</h3>
+            <span class="count">{byYear.get(year)!.length} <span data-lang="en">updates</span><span data-lang="zh">条</span></span>
+          </div>
+          <ol class="news-list">
+            {byYear.get(year)!.map((n) => {
+              const tag = TAG[n.tag] ?? TAG.news;
+              const mi = monthIdx(n.date);
+              return (
+                <li class="news-item">
+                  <div class="news-when">
+                    <span data-lang="en">{MONTHS[mi]}</span><span data-lang="zh">{MONTHS_ZH[mi]}</span>
+                  </div>
+                  <div class="news-body">
+                    <span class={`news-tag ${tag.cls}`}><span data-lang="en">{tag.en}</span><span data-lang="zh">{tag.zh}</span></span>
+                    <h4><span data-lang="en">{n.title_en}</span><span data-lang="zh">{n.title_zh}</span></h4>
+                    {(n.body_en || n.body_zh) && (
+                      <p><span data-lang="en">{n.body_en}</span><span data-lang="zh">{n.body_zh}</span></p>
+                    )}
+                    {n.link && (
+                      <a
+                        class="news-link"
+                        href={n.link}
+                        target={n.link.startsWith("http") ? "_blank" : undefined}
+                        rel="noopener noreferrer"
+                      >
+                        <span data-lang="en">Learn more →</span><span data-lang="zh">了解更多 →</span>
+                      </a>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>

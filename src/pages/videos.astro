@@ -1,0 +1,153 @@
+---
+// 视频页：按「分类」(category) 分组，卡片式网格。点击卡片弹出播放器。
+// 每条视频在 src/data/videos.json 里：
+//   type      = "local" | "youtube" | "bilibili"
+//   src       = 本地文件路径（type=local 时用），如 "/videos/talk.mp4"
+//   videoId   = 外链视频 id（youtube 的 v 参数 / bilibili 的 BV 号）
+//   poster    = 封面图路径（可选；youtube 留空会自动用官方缩略图）
+//   title_en / title_zh = 中英文标题
+//   date      = 显示用日期文本，如 "2025 · APS DFD"
+//   category  = 分组标签
+//   duration  = 时长文本（可选，如 "3:20"），显示在封面角标
+//   description_en / description_zh = 简介（可选）
+// 加视频：把文件放进 public/videos/，然后在 videos.json 加一条。
+import Layout from "../layouts/Layout.astro";
+import videos from "../data/videos.json";
+
+// 分类显示顺序。不在列表里的分类自动排到最后。
+const CATEGORY_ORDER = [
+  "Research & Talks",
+  "Teaching",
+  "Life & Travel",
+];
+const CATEGORY_FALLBACK = "Other";
+
+// 分类标题的中文译名（不影响分组用的英文 key）。
+const LABEL_ZH: Record<string, string> = {
+  "Research & Talks": "科研与报告",
+  "Teaching": "教学",
+  "Life & Travel": "生活与旅行",
+  "Other": "其他",
+};
+
+type Video = (typeof videos)[number];
+
+const groups = new Map<string, Video[]>();
+for (const v of videos) {
+  const key = (v.category as string | null) ?? CATEGORY_FALLBACK;
+  if (!groups.has(key)) groups.set(key, []);
+  groups.get(key)!.push(v);
+}
+const rank = (k: string) => {
+  if (k === CATEGORY_FALLBACK) return CATEGORY_ORDER.length + 1;
+  const i = CATEGORY_ORDER.indexOf(k);
+  return i === -1 ? CATEGORY_ORDER.length : i;
+};
+const sortedGroups = [...groups.keys()]
+  .sort((a, b) => rank(a) - rank(b) || a.localeCompare(b))
+  .map((k) => ({ label: k, items: groups.get(k)! }));
+
+const slug = (s: string) => s.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+
+// 封面图：youtube 无封面时自动取官方缩略图；其他类型用 poster 字段（可能为空）。
+function posterFor(v: Video): string {
+  if (v.poster) return v.poster;
+  if (v.type === "youtube" && v.videoId) return `https://i.ytimg.com/vi/${v.videoId}/hqdefault.jpg`;
+  return "";
+}
+---
+
+<Layout
+  title="Videos"
+  description="A collection of videos by Ziyue Yu — research talks, teaching, and life."
+>
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">05</span><h2><span data-lang="en">Videos</span><span data-lang="zh">视频</span></h2></div>
+      <p class="section-lede">
+        <span data-lang="en">Talks, demos, and moments — click any thumbnail to play.</span><span data-lang="zh">报告、演示与生活片段——点击任意封面即可播放。</span>
+      </p>
+
+      {sortedGroups.map((group) => (
+        <div class="period-block" id={`video-${slug(group.label)}`}>
+          <div class="period-head">
+            <h3><span data-lang="en">{group.label}</span><span data-lang="zh">{LABEL_ZH[group.label] ?? group.label}</span></h3>
+            <span class="count">{group.items.length} <span data-lang="en">videos</span><span data-lang="zh">个</span></span>
+          </div>
+          <div class="video-grid">
+            {group.items.map((v) => {
+              const poster = posterFor(v);
+              return (
+                <button
+                  class="video-card"
+                  data-type={v.type}
+                  data-src={v.type === "local" ? v.src : ""}
+                  data-videoid={v.videoId ?? ""}
+                >
+                  <div class="video-thumb" style={poster ? `background-image:url('${poster}')` : ""}>
+                    {!poster && <span class="video-thumb-fallback">▶</span>}
+                    <span class="video-play" aria-hidden="true"></span>
+                    {v.duration && <span class="video-duration">{v.duration}</span>}
+                  </div>
+                  <div class="video-info">
+                    <h4><span data-lang="en">{v.title_en}</span><span data-lang="zh">{v.title_zh}</span></h4>
+                    {v.date && <span class="video-date">{v.date}</span>}
+                    {(v.description_en || v.description_zh) && (
+                      <p class="video-desc"><span data-lang="en">{v.description_en}</span><span data-lang="zh">{v.description_zh}</span></p>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <div class="video-modal" id="video-modal" aria-hidden="true">
+    <button class="vm-close" aria-label="Close">×</button>
+    <div class="vm-stage"></div>
+  </div>
+</Layout>
+
+<script>
+  const modal = document.getElementById("video-modal");
+  const stage = modal?.querySelector(".vm-stage") as HTMLElement | null;
+
+  function openPlayer(card: HTMLElement) {
+    if (!modal || !stage) return;
+    const type = card.dataset.type;
+    const src = card.dataset.src ?? "";
+    const id = card.dataset.videoid ?? "";
+    let html = "";
+    if (type === "local") {
+      html = `<video src="${src}" controls autoplay playsinline></video>`;
+    } else if (type === "youtube") {
+      html = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+    } else if (type === "bilibili") {
+      html = `<iframe src="//player.bilibili.com/player.html?bvid=${id}&autoplay=1&high_quality=1&danmaku=0" scrolling="no" frameborder="0" allowfullscreen></iframe>`;
+    }
+    stage.innerHTML = html;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+  }
+
+  function closePlayer() {
+    if (!modal || !stage) return;
+    stage.innerHTML = ""; // 停止播放（本地视频 + 停掉 iframe）
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  document.querySelectorAll<HTMLElement>(".video-card").forEach((card) =>
+    card.addEventListener("click", () => openPlayer(card))
+  );
+  modal?.querySelector(".vm-close")?.addEventListener("click", closePlayer);
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) closePlayer();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal?.classList.contains("open")) closePlayer();
+  });
+</script>
