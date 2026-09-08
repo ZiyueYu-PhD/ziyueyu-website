@@ -2,17 +2,17 @@
 layout: ../../layouts/Article.astro
 title: "Tensor-Geometry-Activated Spectral Energy Transfer"
 description: "Turbulence-grade spectral energy transfer without inertia: aligning stress and strain-rate tensors amplifies scale-to-scale energy flux up to ~300x at Re ~ O(1)."
-eyebrow: "Program · Submitted to Journal of Fluid Mechanics"
-eyebrow_zh: "研究项目 · 投稿至 Journal of Fluid Mechanics"
+eyebrow: "Program · Accepted, Journal of Fluid Mechanics"
+eyebrow_zh: "研究项目 · 已被 Journal of Fluid Mechanics 接收"
 ---
 
 <h1 data-lang="en">Tensor-Geometry-Activated Spectral Energy Transfer at Reynolds Numbers of Order Unity in Two-Dimensional Flows</h1>
 
 <h1 data-lang="zh">二维流动中由张量几何激活的、雷诺数为 O(1) 量级的谱能量传递</h1>
 
-<p data-lang="en"><strong>Ziyue Yu, Xinyu Si, Lei Fang</strong> — Submitted to <em>Journal of Fluid Mechanics</em></p>
+<p data-lang="en"><strong>Ziyue Yu, Xinyu Si, Lei Fang</strong> — Accepted, <em>Journal of Fluid Mechanics</em></p>
 
-<p data-lang="zh"><strong>Ziyue Yu, Xinyu Si, Lei Fang</strong> — 投稿至 <em>Journal of Fluid Mechanics</em></p>
+<p data-lang="zh"><strong>Ziyue Yu, Xinyu Si, Lei Fang</strong> — 已被 <em>Journal of Fluid Mechanics</em> 接收</p>
 
 <hr />
 

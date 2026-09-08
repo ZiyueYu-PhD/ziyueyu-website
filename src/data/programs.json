@@ -1,11 +1,11 @@
 [
   {
-    "type": "Submitted",
-    "type_zh": "已投稿",
+    "type": "Accepted",
+    "type_zh": "已接收",
     "title": "Tensor-Geometry-Activated Spectral Energy Transfer at Reynolds Numbers of Order Unity in Two-Dimensional Flows",
     "title_zh": "二维流动中由张量几何激活的、雷诺数为 O(1) 量级的谱能量传递",
     "authors": "Z. Yu, X. Si, and L. Fang",
-    "venue": "Submitted to Journal of Fluid Mechanics · arXiv:2511.05800 [physics.flu-dyn]",
+    "venue": "Accepted, Journal of Fluid Mechanics · arXiv:2511.05800 [physics.flu-dyn]",
     "year": "2025",
     "summary": "Turbulence-grade spectral energy transfer does not require inertia. By aligning the stress and strain-rate tensors with small directional perturbations in an electromagnetically driven thin-layer flow, the scale-to-scale energy flux is amplified up to ~300× at Re ~ O(1), crossing the weak-turbulence threshold in a nominally laminar flow.",
     "summary_zh": "达到湍流量级的谱能量传递并不需要惯性。在电磁驱动的薄层流动中，用微小的方向扰动使应力张量与应变率张量对齐，跨尺度的能量通量在 Re~O(1) 时被放大最多约 300 倍，使一个名义上层流的流动越过了弱湍流的门槛。",
