@@ -494,7 +494,8 @@ img {
   transform: translateY(-2px);
 }
 
-/* 每种状态一套颜色（完成度：Submitted → Finalizing → In Preparation → In Progress），Talk 单独 */
+/* 每种状态一套颜色（完成度：Accepted → Submitted → Finalizing → In Preparation → In Progress），Talk 单独 */
+.status-accepted       { --status-color: #1a7a3c; --status-bg: #e8f5ec; }  /* 深绿：已接收 */
 .status-submitted      { --status-color: #2e8b57; --status-bg: #f0f8f2; }  /* 绿：已投稿 */
 .status-finalizing     { --status-color: #1c8c86; --status-bg: #e9f6f5; }  /* 青绿：定稿中 */
 .status-in-preparation { --status-color: #d99a2b; --status-bg: #fbf5e8; }  /* 琥珀：筹备中 */
