@@ -4,8 +4,21 @@
 import Layout from "../layouts/Layout.astro";
 import photos from "../data/photos.json";
 import programs from "../data/programs.json";
+import news from "../data/news.json";
 
 const previewPhotos = photos.slice(0, 6);
+
+// 首屏“最新动态”小卡片：取 news.json 里最新的 3 条（与 /news 页同一份数据）。
+const NEWS_TAG: Record<string, { en: string; zh: string; cls: string }> = {
+  award:     { en: "Award",     zh: "奖项", cls: "tag-award" },
+  talk:      { en: "Talk",      zh: "报告", cls: "tag-talk" },
+  paper:     { en: "Paper",     zh: "论文", cls: "tag-paper" },
+  milestone: { en: "Milestone", zh: "里程碑", cls: "tag-milestone" },
+  news:      { en: "News",      zh: "动态", cls: "tag-news" },
+};
+const latestNews = [...news]
+  .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
+  .slice(0, 3);
 ---
 
 <Layout
@@ -14,34 +27,62 @@ const previewPhotos = photos.slice(0, 6);
 >
   <!-- ============ 首屏：满屏大背景照 + 叠加文字 ============ -->
   <section id="home" class="hero-bg">
-    <div class="hero-bg-inner">
-      <p class="eyebrow light">
-        <span data-lang="en">Pittsburgh, PA · University of Pittsburgh</span><span data-lang="zh">美国匹兹堡 · 匹兹堡大学</span>
-      </p>
-      <h1>Ziyue Yu</h1>
-      <p class="typed-line">
-        <span id="typed"></span><span class="typed-cursor">|</span>
-      </p>
-      <p class="hero-advisor" data-lang="en">
-        Advised by
-        <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">Prof. Lei Fang</a>,
-        studying turbulence where inertia almost vanishes.
-      </p>
-      <p class="hero-advisor" data-lang="zh">
-        师从
-        <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">方磊 教授</a>，
-        研究惯性趋近于零时的湍流。
-      </p>
-      <div class="hero-actions">
-        <a class="btn" href="/files/Ziyue_Yu_CV.pdf" download><span data-lang="en">Download CV</span><span data-lang="zh">下载简历</span></a>
-        <a class="btn btn-ghost-light" href="/#programs"><span data-lang="en">View Programs</span><span data-lang="zh">查看研究</span></a>
-        <a class="btn btn-ghost-light" href="/photos"><span data-lang="en">View Photos</span><span data-lang="zh">查看相册</span></a>
+    <div class="hero-bg-inner hero-grid">
+      <div class="hero-main">
+        <p class="eyebrow light">
+          <span data-lang="en">Pittsburgh, PA · University of Pittsburgh</span><span data-lang="zh">美国匹兹堡 · 匹兹堡大学</span>
+        </p>
+        <h1>Ziyue Yu</h1>
+        <p class="typed-line">
+          <span id="typed"></span><span class="typed-cursor">|</span>
+        </p>
+        <p class="hero-advisor" data-lang="en">
+          Advised by
+          <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">Prof. Lei Fang</a>,
+          studying turbulence where inertia almost vanishes.
+        </p>
+        <p class="hero-advisor" data-lang="zh">
+          师从
+          <a href="https://www.leifang.org/team" target="_blank" rel="noopener noreferrer">方磊 教授</a>，
+          研究惯性趋近于零时的湍流。
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="/files/Ziyue_Yu_CV.pdf" download><span data-lang="en">Download CV</span><span data-lang="zh">下载简历</span></a>
+          <a class="btn btn-ghost-light" href="/#programs"><span data-lang="en">View Programs</span><span data-lang="zh">查看研究</span></a>
+          <a class="btn btn-ghost-light" href="/photos"><span data-lang="en">View Photos</span><span data-lang="zh">查看相册</span></a>
+        </div>
+        <div class="social-row light">
+          <a href="https://scholar.google.com/citations?user=C4-4wAQAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+          <a href="https://github.com/ZiyueYu-PhD" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="mailto:yuziyue20020619@outlook.com">Email</a>
+        </div>
       </div>
-      <div class="social-row light">
-        <a href="https://scholar.google.com/citations?user=C4-4wAQAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
-        <a href="https://github.com/ZiyueYu-PhD" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="mailto:yuziyue20020619@outlook.com">Email</a>
-      </div>
+
+      <!-- 最新动态：直接在首屏展示最近 3 条，点标题去 /news 看全部 -->
+      <aside class="hero-news" aria-label="Latest news">
+        <div class="hero-news-head">
+          <span data-lang="en">Latest news</span><span data-lang="zh">最新动态</span>
+          <a class="hero-news-all" href="/news"><span data-lang="en">All →</span><span data-lang="zh">全部 →</span></a>
+        </div>
+        <ol class="hero-news-list">
+          {latestNews.map((n) => {
+            const tag = NEWS_TAG[n.tag] ?? NEWS_TAG.news;
+            const href = n.link || "/news";
+            const external = href.startsWith("http");
+            return (
+              <li>
+                <a href={href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}>
+                  <span class="hn-top">
+                    <span class={`news-tag ${tag.cls}`}><span data-lang="en">{tag.en}</span><span data-lang="zh">{tag.zh}</span></span>
+                    <span class="hn-date">{n.date.replace("-", ".")}</span>
+                  </span>
+                  <span class="hn-title"><span data-lang="en">{n.title_en}</span><span data-lang="zh">{n.title_zh}</span></span>
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+      </aside>
     </div>
   </section>
 
