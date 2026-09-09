@@ -10,6 +10,16 @@
     "link": "/work/tensor-geometry"
   },
   {
+    "id": 4,
+    "date": "2026-01",
+    "tag": "milestone",
+    "title_en": "Passed the Ph.D. Qualifying Examination",
+    "title_zh": "通过博士资格考试（QE）",
+    "body_en": "Passed the Ph.D. qualifying examination on January 23, 2026. Committee: Prof. Lei Fang, Prof. Xu Liang, and Prof. Andrew P. Bunger.",
+    "body_zh": "于 2026 年 1 月 23 日通过博士资格考试（QE）。答辩委员会成员：方磊 教授、Xu Liang 教授、Andrew P. Bunger 教授。",
+    "link": ""
+  },
+  {
     "id": 2,
     "date": "2025-11",
     "tag": "talk",
