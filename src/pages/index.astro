@@ -49,7 +49,7 @@ const latestNews = [...news]
         <div class="hero-actions">
           <a class="btn" href="/files/Ziyue_Yu_CV.pdf" download><span data-lang="en">Download CV</span><span data-lang="zh">下载简历</span></a>
           <a class="btn btn-ghost-light" href="/#programs"><span data-lang="en">View Programs</span><span data-lang="zh">查看研究</span></a>
-          <a class="btn btn-ghost-light" href="/photos"><span data-lang="en">View Photos</span><span data-lang="zh">查看相册</span></a>
+          <a class="btn btn-ghost-light" href="/gallery"><span data-lang="en">View Gallery</span><span data-lang="zh">查看影像</span></a>
         </div>
         <div class="social-row light">
           <a href="https://scholar.google.com/citations?user=C4-4wAQAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
@@ -58,6 +58,7 @@ const latestNews = [...news]
         </div>
       </div>
 
+      <div class="hero-side">
       <!-- 最新动态：直接在首屏展示最近 3 条，点标题去 /news 看全部 -->
       <aside class="hero-news" aria-label="Latest news">
         <div class="hero-news-head">
@@ -83,6 +84,19 @@ const latestNews = [...news]
           })}
         </ol>
       </aside>
+
+      <!-- 点赞 + 留言入口：与最新动态并排，落地页即可点赞、跳转留言 -->
+      <aside class="hero-like" data-gb hidden aria-label="Likes and guestbook">
+        <button id="gb-like-hero" class="gb-like" type="button" aria-pressed="false" aria-label="Like this site">
+          <span class="gb-heart" aria-hidden="true">♥</span>
+          <span class="gb-like-count">–</span>
+        </button>
+        <div class="hero-like-text">
+          <span class="hero-like-label"><span data-lang="en">likes from visitors</span><span data-lang="zh">位访客点了赞</span></span>
+          <a class="hero-like-link" href="/#guestbook"><span data-lang="en">Leave a message →</span><span data-lang="zh">留个言 →</span></a>
+        </div>
+      </aside>
+      </div>
     </div>
   </section>
 
@@ -306,23 +320,23 @@ const latestNews = [...news]
     </div>
   </section>
 
-  <!-- ============ Photos 预览 ============ -->
-  <section id="photos" class="section">
+  <!-- ============ Gallery 预览（照片 + 视频，详见 /gallery） ============ -->
+  <section id="gallery" class="section">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">04</span><h2><span data-lang="en">Photos</span><span data-lang="zh">相册</span></h2></div>
+      <div class="sec-head"><span class="sec-num">04</span><h2><span data-lang="en">Gallery</span><span data-lang="zh">影像</span></h2></div>
       <p class="section-lede">
-        <span data-lang="en">A little gallery of my life from 2020 to now — college, graduation, and
-        everything after.</span><span data-lang="zh">记录我从 2020 年至今生活的小相册——大学、毕业，以及之后的一切。</span>
+        <span data-lang="en">Photos and videos from 2020 to now — college, graduation, research, and
+        travel. Here's a peek; the full gallery has both.</span><span data-lang="zh">记录我从 2020 年至今的照片与视频——大学、毕业、科研与旅行。这里先看几张，完整影像（含视频）都在合集里。</span>
       </p>
       <div class="photo-grid">
         {previewPhotos.map((photo) => (
-          <a href="/photos" class={photo.height > photo.width ? "tall" : ""}>
+          <a href="/gallery" class={photo.height > photo.width ? "tall" : ""}>
             <img src={photo.src} alt="Photography by Ziyue Yu" loading="lazy" />
           </a>
         ))}
       </div>
       <div class="hero-actions" style="margin-top: 30px;">
-        <a class="btn" href="/photos"><span data-lang="en">Browse the Timeline →</span><span data-lang="zh">浏览时间轴 →</span></a>
+        <a class="btn" href="/gallery"><span data-lang="en">Explore the gallery →</span><span data-lang="zh">进入影像合集 →</span></a>
       </div>
     </div>
   </section>
@@ -363,21 +377,16 @@ const latestNews = [...news]
           </li>
         </ul>
       </div>
-    </div>
-  </section>
 
-  <!-- ============ Guestbook 留言墙 ============ -->
-  <!-- 数据存在 Supabase（浏览器直连公开 REST 接口），站点保持纯静态。
-       配置在页面底部 <script> 顶部的 SUPABASE_URL / SUPABASE_ANON_KEY。
-       未配置时本区块自动隐藏。表结构与安全策略见项目 README / 我给的 SQL。 -->
-  <section id="guestbook" class="section section-alt" hidden>
-    <div class="wrap">
-      <div class="sec-head"><span class="sec-num">06</span><h2><span data-lang="en">Guestbook</span><span data-lang="zh">留言墙</span></h2></div>
-      <p class="section-lede">
-        <span data-lang="en">Leave a note, or just tap the heart — everyone who stops by can see it.</span><span data-lang="zh">留一句话，或点个赞——每位来访的人都能看到。</span>
-      </p>
+      <!-- 留言墙：合并进 Contact。数据存 Supabase（浏览器直连公开 REST），站点保持纯静态；
+           配置在页面底部 <script> 顶部的 SUPABASE_URL / SUPABASE_ANON_KEY，未配置时自动隐藏。 -->
+      <div id="guestbook" class="gb-wrap" data-gb hidden>
+        <h3 class="gb-heading"><span data-lang="en">Guestbook</span><span data-lang="zh">留言墙</span></h3>
+        <p class="gb-lede">
+          <span data-lang="en">Leave a note, or just tap the heart — everyone who stops by can see it.</span><span data-lang="zh">留一句话，或点个赞——每位来访的人都能看到。</span>
+        </p>
 
-      <div class="gb-likebar">
+        <div class="gb-likebar">
         <button id="gb-like" class="gb-like" type="button" aria-pressed="false" aria-label="Like this site">
           <span class="gb-heart" aria-hidden="true">♥</span>
           <span class="gb-like-count" id="gb-like-count">–</span>
@@ -400,7 +409,8 @@ const latestNews = [...news]
         </div>
       </form>
 
-      <ol id="gb-list" class="gb-list" aria-live="polite"></ol>
+        <ol id="gb-list" class="gb-list" aria-live="polite"></ol>
+      </div>
     </div>
   </section>
 </Layout>
@@ -465,10 +475,10 @@ const latestNews = [...news]
     !SUPABASE_URL.includes("YOUR-PROJECT") &&
     !SUPABASE_ANON_KEY.startsWith("REPLACE_WITH");
 
-  const section = document.getElementById("guestbook");
+  const gbEls = document.querySelectorAll("[data-gb]");
 
-  if (configured && section) {
-    section.hidden = false;
+  if (configured && gbEls.length) {
+    gbEls.forEach((el) => (el.hidden = false));
 
     const REST = SUPABASE_URL.replace(/\/+$/, "") + "/rest/v1";
     const headers = {
@@ -486,8 +496,8 @@ const latestNews = [...news]
     const honeyEl = document.getElementById("gb-website");
     const submitBtn = document.getElementById("gb-submit");
     const statusEl = document.getElementById("gb-status");
-    const likeBtn = document.getElementById("gb-like");
-    const likeCountEl = document.getElementById("gb-like-count");
+    const likeBtns = Array.from(document.querySelectorAll(".gb-like"));
+    const likeCountEls = Array.from(document.querySelectorAll(".gb-like-count"));
 
     // 输入框的中英文占位符，随语言切换更新
     function applyPlaceholders() {
@@ -594,11 +604,16 @@ const latestNews = [...news]
       }
     });
 
-    // ---------- 点赞 ----------
+    // ---------- 点赞（首屏 + 留言墙两个按钮联动，共享同一计数） ----------
     const LIKED_KEY = "gb-liked";
+    function setCount(n) {
+      likeCountEls.forEach((el) => (el.textContent = n));
+    }
     function markLiked() {
-      likeBtn.classList.add("is-liked");
-      likeBtn.setAttribute("aria-pressed", "true");
+      likeBtns.forEach((b) => {
+        b.classList.add("is-liked");
+        b.setAttribute("aria-pressed", "true");
+      });
     }
     let hasLiked = false;
     try {
@@ -611,13 +626,13 @@ const latestNews = [...news]
         const res = await fetch(REST + "/site_likes?id=eq.1&select=count", { headers });
         if (!res.ok) throw new Error(res.status);
         const rows = await res.json();
-        likeCountEl.textContent = rows.length ? rows[0].count : 0;
+        setCount(rows.length ? rows[0].count : 0);
       } catch (e) {
-        likeCountEl.textContent = "–";
+        setCount("–");
       }
     }
 
-    likeBtn.addEventListener("click", async () => {
+    async function doLike() {
       if (hasLiked) return; // 每个浏览器只赞一次
       hasLiked = true;
       markLiked();
@@ -625,8 +640,8 @@ const latestNews = [...news]
         localStorage.setItem(LIKED_KEY, "1");
       } catch (e) {}
       // 先乐观 +1，再用服务器返回值校正
-      const optimistic = parseInt(likeCountEl.textContent, 10);
-      if (Number.isFinite(optimistic)) likeCountEl.textContent = optimistic + 1;
+      const cur = parseInt(likeCountEls[0] ? likeCountEls[0].textContent : "", 10);
+      if (Number.isFinite(cur)) setCount(cur + 1);
       try {
         const res = await fetch(REST + "/rpc/bump_likes", {
           method: "POST",
@@ -635,10 +650,12 @@ const latestNews = [...news]
         });
         if (res.ok) {
           const n = await res.json();
-          if (typeof n === "number") likeCountEl.textContent = n;
+          if (typeof n === "number") setCount(n);
         }
       } catch (e) {}
-    });
+    }
+
+    likeBtns.forEach((b) => b.addEventListener("click", doLike));
 
     loadMessages();
     loadLikes();

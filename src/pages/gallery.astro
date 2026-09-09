@@ -1,0 +1,73 @@
+---
+// Gallery 聚合页：一页里同时展示「相册」与「视频」的预览，
+// 各自「查看全部 →」进入功能完整的 /photos 与 /videos 页面。
+// 预览内容分别取自 photos.json / videos.json。
+import Layout from "../layouts/Layout.astro";
+import photos from "../data/photos.json";
+import videos from "../data/videos.json";
+
+const previewPhotos = photos.slice(0, 8);
+const previewVideos = videos.slice(0, 6);
+
+// 视频封面：youtube 无封面时自动取官方缩略图；其他类型用 poster 字段。
+function posterFor(v: (typeof videos)[number]): string {
+  if (v.poster) return v.poster;
+  if (v.type === "youtube" && v.videoId) return `https://i.ytimg.com/vi/${v.videoId}/hqdefault.jpg`;
+  return "";
+}
+---
+
+<Layout
+  title="Gallery"
+  description="Photos and videos by Ziyue Yu — a gallery of life, research, and travel."
+>
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">04</span><h2><span data-lang="en">Gallery</span><span data-lang="zh">影像</span></h2></div>
+      <p class="section-lede">
+        <span data-lang="en">Photos and videos in one place — moments from life, research, and the road. Click into each to see the full collection.</span><span data-lang="zh">照片与视频都在这里——生活、科研与旅途中的片段。点进各自的合集查看全部。</span>
+      </p>
+
+      <!-- Photos 预览 -->
+      <div class="period-block">
+        <div class="period-head">
+          <h3><span data-lang="en">Photos</span><span data-lang="zh">相册</span></h3>
+          <a class="gallery-all" href="/photos"><span data-lang="en">See all photos →</span><span data-lang="zh">查看全部照片 →</span></a>
+        </div>
+        <div class="photo-grid">
+          {previewPhotos.map((photo) => (
+            <a href="/photos" class={photo.height > photo.width ? "tall" : ""}>
+              <img src={photo.src} alt={photo.caption ?? "Photo by Ziyue Yu"} loading="lazy" />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Videos 预览 -->
+      <div class="period-block">
+        <div class="period-head">
+          <h3><span data-lang="en">Videos</span><span data-lang="zh">视频</span></h3>
+          <a class="gallery-all" href="/videos"><span data-lang="en">See all videos →</span><span data-lang="zh">查看全部视频 →</span></a>
+        </div>
+        <div class="video-grid">
+          {previewVideos.map((v) => {
+            const poster = posterFor(v);
+            return (
+              <a class="video-card" href="/videos">
+                <div class="video-thumb" style={poster ? `background-image:url('${poster}')` : ""}>
+                  {!poster && <span class="video-thumb-fallback">▶</span>}
+                  <span class="video-play" aria-hidden="true"></span>
+                  {v.duration && <span class="video-duration">{v.duration}</span>}
+                </div>
+                <div class="video-info">
+                  <h4><span data-lang="en">{v.title_en}</span><span data-lang="zh">{v.title_zh}</span></h4>
+                  {v.date && <span class="video-date">{v.date}</span>}
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
