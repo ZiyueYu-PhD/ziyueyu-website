@@ -1124,6 +1124,178 @@ img {
   font-weight: 500;
 }
 
+/* ---- Guestbook 留言墙 ---- */
+.gb-likebar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.gb-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.gb-like:hover {
+  border-color: #e0678a;
+  color: #d24b73;
+}
+
+.gb-like:active {
+  transform: scale(0.96);
+}
+
+.gb-heart {
+  font-size: 1.2rem;
+  line-height: 1;
+  color: #c9ccd3;
+  transition: color 0.15s ease, transform 0.2s ease;
+}
+
+.gb-like:hover .gb-heart {
+  color: #e0678a;
+}
+
+.gb-like.is-liked {
+  border-color: #e0678a;
+  color: #d24b73;
+  cursor: default;
+}
+
+.gb-like.is-liked .gb-heart {
+  color: #e0678a;
+  transform: scale(1.12);
+}
+
+.gb-like-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.gb-like-label {
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.gb-form {
+  margin-bottom: 34px;
+}
+
+.gb-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gb-name,
+.gb-msg {
+  width: 100%;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 11px 14px;
+  transition: border-color 0.15s ease;
+}
+
+.gb-name:focus,
+.gb-msg:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.gb-msg {
+  resize: vertical;
+  min-height: 84px;
+  line-height: 1.5;
+}
+
+/* 蜜罐：对真人彻底隐藏 */
+.gb-website {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.gb-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.gb-status {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.gb-status.is-error {
+  color: #c0392b;
+}
+
+.gb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.gb-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  background: var(--bg);
+}
+
+.gb-item-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.gb-who {
+  font-weight: 700;
+  font-size: 0.96rem;
+}
+
+.gb-when {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.gb-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.gb-empty {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 /* ---- Contact：两栏（左邀请语 + 右链接） ---- */
 .contact-cols {
   display: grid;

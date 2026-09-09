@@ -365,6 +365,44 @@ const latestNews = [...news]
       </div>
     </div>
   </section>
+
+  <!-- ============ Guestbook 留言墙 ============ -->
+  <!-- 数据存在 Supabase（浏览器直连公开 REST 接口），站点保持纯静态。
+       配置在页面底部 <script> 顶部的 SUPABASE_URL / SUPABASE_ANON_KEY。
+       未配置时本区块自动隐藏。表结构与安全策略见项目 README / 我给的 SQL。 -->
+  <section id="guestbook" class="section section-alt" hidden>
+    <div class="wrap">
+      <div class="sec-head"><span class="sec-num">06</span><h2><span data-lang="en">Guestbook</span><span data-lang="zh">留言墙</span></h2></div>
+      <p class="section-lede">
+        <span data-lang="en">Leave a note, or just tap the heart — everyone who stops by can see it.</span><span data-lang="zh">留一句话，或点个赞——每位来访的人都能看到。</span>
+      </p>
+
+      <div class="gb-likebar">
+        <button id="gb-like" class="gb-like" type="button" aria-pressed="false" aria-label="Like this site">
+          <span class="gb-heart" aria-hidden="true">♥</span>
+          <span class="gb-like-count" id="gb-like-count">–</span>
+        </button>
+        <span class="gb-like-label"><span data-lang="en">likes from visitors like you</span><span data-lang="zh">位访客点了赞</span></span>
+      </div>
+
+      <form id="gb-form" class="gb-form" autocomplete="off">
+        <div class="gb-fields">
+          <input id="gb-name" class="gb-name" type="text" maxlength="40"
+            data-ph-en="Your name (optional)" data-ph-zh="你的名字（可选）" />
+          <!-- 蜜罐字段：真人看不到，机器人常会填 → 用来挡垃圾留言 -->
+          <input id="gb-website" class="gb-website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <textarea id="gb-msg" class="gb-msg" maxlength="280" rows="3" required
+            data-ph-en="Say something nice…" data-ph-zh="写点什么吧……"></textarea>
+        </div>
+        <div class="gb-actions">
+          <span id="gb-status" class="gb-status" role="status" aria-live="polite"></span>
+          <button type="submit" class="btn" id="gb-submit"><span data-lang="en">Sign the guestbook →</span><span data-lang="zh">留言 →</span></button>
+        </div>
+      </form>
+
+      <ol id="gb-list" class="gb-list" aria-live="polite"></ol>
+    </div>
+  </section>
 </Layout>
 
 <script>
@@ -412,4 +450,197 @@ const latestNews = [...news]
   }
 
   tick();
+</script>
+
+<script>
+  // ===================== 留言墙 + 点赞 =====================
+  // 数据后端：Supabase（浏览器直连其公开 REST 接口）。把下面两行换成你自己项目的值：
+  //   SUPABASE_URL      = Supabase 项目的 Project URL
+  //   SUPABASE_ANON_KEY = Settings → API 里的 anon public key（公开 key，配合行级安全策略使用是安全的）
+  // 未替换时整个留言墙区块保持隐藏，不会在线上显示。
+  const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+  const SUPABASE_ANON_KEY = "REPLACE_WITH_ANON_PUBLIC_KEY";
+
+  const configured =
+    !SUPABASE_URL.includes("YOUR-PROJECT") &&
+    !SUPABASE_ANON_KEY.startsWith("REPLACE_WITH");
+
+  const section = document.getElementById("guestbook");
+
+  if (configured && section) {
+    section.hidden = false;
+
+    const REST = SUPABASE_URL.replace(/\/+$/, "") + "/rest/v1";
+    const headers = {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: "Bearer " + SUPABASE_ANON_KEY,
+    };
+
+    const isZh = () => document.documentElement.classList.contains("lang-zh");
+    const t = (en, zh) => (isZh() ? zh : en);
+
+    const listEl = document.getElementById("gb-list");
+    const form = document.getElementById("gb-form");
+    const nameEl = document.getElementById("gb-name");
+    const msgEl = document.getElementById("gb-msg");
+    const honeyEl = document.getElementById("gb-website");
+    const submitBtn = document.getElementById("gb-submit");
+    const statusEl = document.getElementById("gb-status");
+    const likeBtn = document.getElementById("gb-like");
+    const likeCountEl = document.getElementById("gb-like-count");
+
+    // 输入框的中英文占位符，随语言切换更新
+    function applyPlaceholders() {
+      document.querySelectorAll("[data-ph-en]").forEach((el) => {
+        el.setAttribute("placeholder", isZh() ? el.getAttribute("data-ph-zh") : el.getAttribute("data-ph-en"));
+      });
+    }
+    applyPlaceholders();
+    document.addEventListener("langchange", applyPlaceholders);
+
+    function setStatus(en, zh, isError) {
+      if (!statusEl) return;
+      statusEl.textContent = t(en, zh);
+      statusEl.classList.toggle("is-error", !!isError);
+    }
+
+    function fmtDate(iso) {
+      try {
+        const d = new Date(iso);
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`;
+      } catch (e) {
+        return "";
+      }
+    }
+
+    // 用 textContent 渲染，绝不用 innerHTML，防止留言里夹带脚本（XSS）
+    function renderMessages(rows) {
+      listEl.textContent = "";
+      if (!rows.length) {
+        const li = document.createElement("li");
+        li.className = "gb-empty";
+        li.textContent = t("Be the first to say hello.", "来做第一个留言的人吧。");
+        listEl.appendChild(li);
+        return;
+      }
+      for (const r of rows) {
+        const li = document.createElement("li");
+        li.className = "gb-item";
+
+        const head = document.createElement("div");
+        head.className = "gb-item-head";
+        const who = document.createElement("span");
+        who.className = "gb-who";
+        who.textContent = (r.name && r.name.trim()) || t("Anonymous", "匿名");
+        const when = document.createElement("span");
+        when.className = "gb-when";
+        when.textContent = fmtDate(r.created_at);
+        head.appendChild(who);
+        head.appendChild(when);
+
+        const body = document.createElement("p");
+        body.className = "gb-text";
+        body.textContent = r.message;
+
+        li.appendChild(head);
+        li.appendChild(body);
+        listEl.appendChild(li);
+      }
+    }
+
+    async function loadMessages() {
+      try {
+        const res = await fetch(
+          REST + "/guestbook?select=id,name,message,created_at&order=created_at.desc&limit=100",
+          { headers }
+        );
+        if (!res.ok) throw new Error(res.status);
+        renderMessages(await res.json());
+      } catch (e) {
+        listEl.textContent = "";
+        const li = document.createElement("li");
+        li.className = "gb-empty";
+        li.textContent = t("Couldn't load messages right now.", "暂时无法加载留言。");
+        listEl.appendChild(li);
+      }
+    }
+
+    form.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      if (honeyEl && honeyEl.value) return; // 蜜罐被填 → 判为机器人，静默丢弃
+      const message = (msgEl.value || "").trim();
+      const name = (nameEl.value || "").trim();
+      if (!message) return;
+
+      submitBtn.disabled = true;
+      setStatus("Posting…", "发送中……", false);
+      try {
+        const res = await fetch(REST + "/guestbook", {
+          method: "POST",
+          headers: { ...headers, "Content-Type": "application/json", Prefer: "return=minimal" },
+          body: JSON.stringify({ name: name || null, message }),
+        });
+        if (!res.ok) throw new Error(res.status);
+        msgEl.value = "";
+        setStatus("Thanks for signing! 🎉", "感谢留言！🎉", false);
+        await loadMessages();
+      } catch (e) {
+        setStatus("Something went wrong — please try again.", "出了点问题，请再试一次。", true);
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    // ---------- 点赞 ----------
+    const LIKED_KEY = "gb-liked";
+    function markLiked() {
+      likeBtn.classList.add("is-liked");
+      likeBtn.setAttribute("aria-pressed", "true");
+    }
+    let hasLiked = false;
+    try {
+      hasLiked = localStorage.getItem(LIKED_KEY) === "1";
+    } catch (e) {}
+    if (hasLiked) markLiked();
+
+    async function loadLikes() {
+      try {
+        const res = await fetch(REST + "/site_likes?id=eq.1&select=count", { headers });
+        if (!res.ok) throw new Error(res.status);
+        const rows = await res.json();
+        likeCountEl.textContent = rows.length ? rows[0].count : 0;
+      } catch (e) {
+        likeCountEl.textContent = "–";
+      }
+    }
+
+    likeBtn.addEventListener("click", async () => {
+      if (hasLiked) return; // 每个浏览器只赞一次
+      hasLiked = true;
+      markLiked();
+      try {
+        localStorage.setItem(LIKED_KEY, "1");
+      } catch (e) {}
+      // 先乐观 +1，再用服务器返回值校正
+      const optimistic = parseInt(likeCountEl.textContent, 10);
+      if (Number.isFinite(optimistic)) likeCountEl.textContent = optimistic + 1;
+      try {
+        const res = await fetch(REST + "/rpc/bump_likes", {
+          method: "POST",
+          headers: { ...headers, "Content-Type": "application/json" },
+          body: "{}",
+        });
+        if (res.ok) {
+          const n = await res.json();
+          if (typeof n === "number") likeCountEl.textContent = n;
+        }
+      } catch (e) {}
+    });
+
+    loadMessages();
+    loadLikes();
+  }
 </script>
