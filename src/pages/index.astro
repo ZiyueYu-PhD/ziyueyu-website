@@ -383,7 +383,7 @@ const latestNews = [...news]
       <div id="guestbook" class="gb-wrap" data-gb hidden>
         <h3 class="gb-heading"><span data-lang="en">Guestbook</span><span data-lang="zh">留言墙</span></h3>
         <p class="gb-lede">
-          <span data-lang="en">Leave a note, or just tap the heart — everyone who stops by can see it.</span><span data-lang="zh">留一句话，或点个赞——每位来访的人都能看到。</span>
+          <span data-lang="en">Leave a note, or just tap the heart. Messages appear after a quick review.</span><span data-lang="zh">留一句话，或点个赞。留言会在我审核通过后展示。</span>
         </p>
 
         <div class="gb-likebar">
@@ -564,7 +564,7 @@ const latestNews = [...news]
     async function loadMessages() {
       try {
         const res = await fetch(
-          REST + "/guestbook?select=id,name,message,created_at&order=created_at.desc&limit=100",
+          REST + "/guestbook?select=id,name,message,created_at&approved=eq.true&order=created_at.desc&limit=100",
           { headers }
         );
         if (!res.ok) throw new Error(res.status);
@@ -595,7 +595,11 @@ const latestNews = [...news]
         });
         if (!res.ok) throw new Error(res.status);
         msgEl.value = "";
-        setStatus("Thanks for signing! 🎉", "感谢留言！🎉", false);
+        setStatus(
+          "Thanks! Your message will appear once it's approved. 🎉",
+          "感谢留言！通过审核后就会显示出来。🎉",
+          false
+        );
         await loadMessages();
       } catch (e) {
         setStatus("Something went wrong — please try again.", "出了点问题，请再试一次。", true);

@@ -16,6 +16,7 @@ create table if not exists public.guestbook (
   id         bigint generated always as identity primary key,
   name       text,
   message    text not null,
+  approved   boolean not null default false,  -- hidden until the owner approves
   created_at timestamptz not null default now(),
   constraint guestbook_name_len    check (name is null or char_length(name) <= 40),
   constraint guestbook_message_len check (char_length(message) between 1 and 280)
@@ -23,17 +24,19 @@ create table if not exists public.guestbook (
 
 alter table public.guestbook enable row level security;
 
--- anyone can read every message
+-- visitors can read ONLY approved messages
 drop policy if exists "guestbook read" on public.guestbook;
 create policy "guestbook read" on public.guestbook
-  for select using (true);
+  for select using (approved = true);
 
--- anyone can add a message (length is re-checked by the constraints above)
+-- visitors can add a message, but can never pre-approve their own
+-- (an insert trying to set approved = true is rejected)
 drop policy if exists "guestbook insert" on public.guestbook;
 create policy "guestbook insert" on public.guestbook
-  for insert with check (true);
+  for insert with check (approved = false);
 
--- no update/delete policy → visitors cannot edit or delete anything
+-- no update/delete policy → only the owner (via the dashboard) can approve/delete
+-- To approve: Table Editor → guestbook → set approved = true on the row.
 
 grant select, insert on public.guestbook to anon;
 
