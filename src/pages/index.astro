@@ -220,9 +220,10 @@ const latestNews = [...news]
                   <span data-lang="en">{item.summary}</span><span data-lang="zh">{item.summary_zh ?? item.summary}</span>
                 </p>
               )}
-              {(item.link || item.pdf || item.detail) && (
+              {(item.journal || item.link || item.pdf || item.detail) && (
                 <div class="prog-links">
                   {item.detail && <a href={item.detail}><span data-lang="en">Read summary →</span><span data-lang="zh">阅读摘要 →</span></a>}
+                  {item.journal && <a href={item.journal} target="_blank" rel="noopener noreferrer"><span data-lang="en">Journal ↗</span><span data-lang="zh">期刊原文 ↗</span></a>}
                   {item.link && <a href={item.link} target="_blank" rel="noopener noreferrer">arXiv ↗</a>}
                   {item.pdf && <a href={item.pdf} target="_blank" rel="noopener noreferrer">PDF ↗</a>}
                 </div>

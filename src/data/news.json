@@ -1,5 +1,15 @@
 [
   {
+    "id": 5,
+    "date": "2026-10",
+    "tag": "paper",
+    "title_en": "Paper published in Journal of Fluid Mechanics",
+    "title_zh": "论文在 Journal of Fluid Mechanics 正式发表",
+    "body_en": "\"Tensor-Geometry-Activated Spectral Energy Transfer at Reynolds Numbers of Order Unity in Two-Dimensional Flows\" (Z. Yu, X. Si & L. Fang) is now published in the Journal of Fluid Mechanics.",
+    "body_zh": "《二维流动中由张量几何激活的、雷诺数为 O(1) 量级的谱能量传递》（Z. Yu, X. Si, L. Fang）已在 Journal of Fluid Mechanics 正式见刊。",
+    "link": "https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/tensorgeometryactivated-spectral-energy-transfer-at-reynolds-numbers-of-order-unity-in-twodimensional-flows/8A114D1CE7A6748D458A5E8E3E61BE7A"
+  },
+  {
     "id": 3,
     "date": "2026-09",
     "tag": "paper",
