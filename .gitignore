@@ -9,3 +9,6 @@ dist/
 
 # 参考素材（学长网站截图等），非本站内容，不发布。
 z_example/
+
+.vercel
+.env*
