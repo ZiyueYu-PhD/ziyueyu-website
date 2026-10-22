@@ -10,9 +10,9 @@ eyebrow_zh: "研究项目 · 论文定稿中"
 
 <h1 data-lang="zh">活性悬浮液中的双向耦合抑制颗粒聚集并诱导非单调的流动稳定化</h1>
 
-<p data-lang="en"><strong>Miyi Wu, Ziyue Yu, Lei Fang</strong> — Manuscript being finalized (<em>Physical Review Fluids</em>)</p>
+<p data-lang="en"><strong>Ziyue Yu, Miyi Wu, Lei Fang</strong> — Manuscript being finalized (<em>Physical Review Fluids</em>)</p>
 
-<p data-lang="zh"><strong>Miyi Wu, Ziyue Yu, Lei Fang</strong> — 论文定稿中（<em>Physical Review Fluids</em>）</p>
+<p data-lang="zh"><strong>Ziyue Yu, Miyi Wu, Lei Fang</strong> — 论文定稿中（<em>Physical Review Fluids</em>）</p>
 
 <hr />
 
