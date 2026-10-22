@@ -58,7 +58,7 @@ const socials = [
     </main>
     <footer class="footer">
       <div class="wrap footer-inner">
-        <span>© {new Date().getFullYear()} <strong>Ziyue Yu</strong></span>
+        <span>© {new Date().getFullYear()} <strong>Ziyue Yu</strong> · <span data-lang="en">Updated</span><span data-lang="zh">更新于</span> {new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" })}</span>
         <nav class="footer-links">
           {socials.map((s) => (
             <a href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
