@@ -114,5 +114,6 @@ public/
 
 ## 记得改的地方
 
+
 - `astro.config.mjs` 里的 `site` 字段，换成你未来的真实域名（目前还是 example.com，**唯一剩下的占位符**）
 - 其余内容（Scholar 链接、邮箱、GitHub、简介、照片、CV）已于 2026-07-02 全部填好
