@@ -1,0 +1,28 @@
+# 每次推送到 main，由 GitHub Actions 调用 Vercel CLI 部署到 ziyue-yu.com。
+# （Vercel 自带的 Git 自动部署自 2026-10 起收不到推送，改用这个。）
+# 需要在 GitHub 仓库 Settings → Secrets and variables → Actions 里设置 VERCEL_TOKEN。
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: vercel-production
+  cancel-in-progress: true
+
+env:
+  VERCEL_ORG_ID: team_yk1KUEkIi2mDXg2AMe3qgSZF
+  VERCEL_PROJECT_ID: prj_Pjbf1HsqCi4B7ZSn0clQRqaBCxR5
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Deploy
+        run: npx --yes vercel@65.1.0 deploy --prod --yes --token="${{ secrets.VERCEL_TOKEN }}"
